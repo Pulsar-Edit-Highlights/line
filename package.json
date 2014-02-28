@@ -1,0 +1,17 @@
+{
+  "name": "highlight-line",
+  "main": "./lib/highlight-line",
+  "version": "0.0.2",
+  "description": "Highlights the current line in the editor",
+  "repository": "https://github.com/richrace/highlight-line",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+  },
+  "bugs": {
+    "url": "https://github.com/richrace/highlight-line/issues"
+  },
+  "homepage": "https://github.com/richrace/highlight-line"
+}
