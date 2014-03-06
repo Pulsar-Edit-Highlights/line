@@ -34,9 +34,12 @@ class HighlightLineView extends View
       else
         wantedOpacity = @defaultOpacity
 
+      if wantedOpacity isnt 100
+        wantedOpacity = "0.#{wantedOpacity}"
+
       $('.line').css('background-color', '')
 
-      rgba = "rgba(#{wantedColor}, 0.#{wantedOpacity})"
+      rgba = "rgba(#{wantedColor}, #{wantedOpacity})"
       $('.line.cursor-line').attr('style', "background-color: #{rgba}")
     else
       $('.line').css('background-color', '')
