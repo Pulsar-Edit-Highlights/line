@@ -24,22 +24,36 @@ class HighlightLineView extends View
     @detach()
 
   handleSelection: =>
+    @resetBackground()
     if atom.config.get('highlight-line.enable')
-      wantedColor = atom.config.get('highlight-line.backgroundRgaColor')
-      if wantedColor?.split(',').length isnt 3
-        wantedColor = @defaultBgColor
-      wantedOpacity = atom.config.get('highlight-line.opacity')
-      if wantedOpacity
-        wantedOpacity = parseFloat(wantedOpacity)
-      else
-        wantedOpacity = @defaultOpacity
+      @showHighlight()
 
-      if wantedOpacity isnt 100
-        wantedOpacity = "0.#{wantedOpacity}"
+  resetBackground: ->
+    $('.line').css('background-color', '')
 
-      $('.line').css('background-color', '')
+  showHighlight: =>
+    rgba = "rgba(#{@wantedColor()}, #{@wantedOpacity()})"
 
-      rgba = "rgba(#{wantedColor}, #{wantedOpacity})"
-      $('.line.cursor-line').attr('style', "background-color: #{rgba}")
+    activeView = atom.workspaceView.getActiveView()
+    cursorViews = activeView.getCursorViews()
+
+    for cursorView in cursorViews
+      range = cursorView.getScreenPosition()
+      lineElement = activeView.lineElementForScreenRow(range.row)
+      $(lineElement).attr('style', "background-color: #{rgba}")
+
+  wantedColor: ->
+    wantedColor = atom.config.get('highlight-line.backgroundRgaColor')
+    if wantedColor?.split(',').length isnt 3
+      wantedColor = @defaultBgColor
+    wantedColor
+
+  wantedOpacity: ->
+    wantedOpacity = atom.config.get('highlight-line.opacity')
+    if wantedOpacity
+      wantedOpacity = parseFloat(wantedOpacity)
     else
-      $('.line').css('background-color', '')
+      wantedOpacity = @defaultOpacity
+    if wantedOpacity isnt 100
+      wantedOpacity = "0.#{wantedOpacity}"
+    wantedOpacity
