@@ -1,4 +1,4 @@
-{View} = require 'atom'
+{EditorView, View} = require 'atom'
 {$} = require 'atom'
 
 module.exports =
@@ -35,6 +35,8 @@ class HighlightLineView extends View
     rgba = "rgba(#{@wantedColor()}, #{@wantedOpacity()})"
 
     activeView = atom.workspaceView.getActiveView()
+    return unless activeView instanceof EditorView
+
     cursorViews = activeView.getCursorViews()
 
     for cursorView in cursorViews
