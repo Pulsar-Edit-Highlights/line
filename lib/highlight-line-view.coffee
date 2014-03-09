@@ -10,8 +10,8 @@ class HighlightLineView extends View
   initialize: (serializeState) ->
     @defaultBgColor = "100, 100, 100"
     @defaultOpacity = 50
-    atom.workspaceView.eachPaneView (paneView) =>
-      paneView.on "selection:changed", @handleSelection
+    atom.workspaceView.eachEditorView (editorView) =>
+      editorView.on "cursor:moved", @handleSelection
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
@@ -19,8 +19,8 @@ class HighlightLineView extends View
 
   # Tear down any state and detach
   destroy: ->
-    atom.workspaceView.eachPaneView (paneView) ->
-      paneView.off "selection:changed"
+    atom.workspaceView.eachEditorView (editorView) ->
+      editorView.off "cursor:moved"
     @detach()
 
   handleSelection: =>
