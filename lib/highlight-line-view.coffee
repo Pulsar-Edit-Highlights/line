@@ -1,29 +1,49 @@
 {EditorView, View} = require 'atom'
 {$} = require 'atom'
 
+lines = []
+
 module.exports =
+  configDefaults:
+    enable: true
+    backgroundRgaColor: "100, 100, 100"
+    opacity: "50%"
+
+  activate: ->
+    atom.workspaceView.eachEditorView (editorView) ->
+      if editorView.attached and editorView.getPane()
+        line = new HighlightLineView(editorView)
+        lines.push line
+        editorView.underlayer.append(line)
+
+  deactivate: ->
+    for line in lines
+      line.destroy()
+    lines = []
+
 class HighlightLineView extends View
 
   @content: ->
     @div class: 'highlight-view hidden'
 
-  initialize: (serializeState) ->
+  initialize: (@editorView) ->
     @defaultBgColor = "100, 100, 100"
     @defaultOpacity = 50
-    atom.workspaceView.eachEditorView (editorView) =>
-      editorView.on "cursor:moved", @handleSelection
-
-  # Returns an object that can be retrieved when package is activated
-  serialize: ->
-    # Nothing to serialize!
+    @subscribe @editorView, 'cursor:moved', @updateSelectedLine
+    @subscribe @editorView, 'selection:changed', @updateSelectedLine
+    @subscribe @editorView.getPane(), 'pane:active-item-changed',
+      @updateSelectedLine
+    @subscribe @editorView.getPane(), 'pane:item-removed', @destroy
+    @updateSelectedLine()
 
   # Tear down any state and detach
-  destroy: ->
-    atom.workspaceView.eachEditorView (editorView) ->
-      editorView.off "cursor:moved"
+  destroy: (pane) =>
+    return if @editorView.getPane().getItems().length isnt 0
+    @unsubscribe()
+    @remove()
     @detach()
 
-  handleSelection: =>
+  updateSelectedLine: =>
     @resetBackground()
     if atom.config.get('highlight-line.enable')
       @showHighlight()
@@ -33,15 +53,10 @@ class HighlightLineView extends View
 
   showHighlight: =>
     rgba = "rgba(#{@wantedColor()}, #{@wantedOpacity()})"
-
-    activeView = atom.workspaceView.getActiveView()
-    return unless activeView instanceof EditorView
-
-    cursorViews = activeView.getCursorViews()
-
+    cursorViews = @editorView.getCursorViews()
     for cursorView in cursorViews
       range = cursorView.getScreenPosition()
-      lineElement = activeView.lineElementForScreenRow(range.row)
+      lineElement = @editorView.lineElementForScreenRow(range.row)
       $(lineElement).attr('style', "background-color: #{rgba}")
 
   wantedColor: ->

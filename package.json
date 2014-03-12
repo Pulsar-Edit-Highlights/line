@@ -1,6 +1,6 @@
 {
   "name": "highlight-line",
-  "main": "./lib/highlight-line",
+  "main": "./lib/highlight-line-view",
   "version": "0.3.2",
   "description": "Highlights the current line in the editor",
   "repository": "https://github.com/richrace/highlight-line",
