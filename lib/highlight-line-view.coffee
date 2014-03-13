@@ -33,7 +33,7 @@ class HighlightLineView extends View
     @subscribe @editorView, 'selection:changed', @updateSelectedLine
     @subscribe @editorView.getPane(), 'pane:active-item-changed',
       @updateSelectedLine
-    @subscribe @editorView.getPane(), 'pane:item-removed', @destroy
+    @subscribe @editorView, 'core:close', @destroy
     @updateSelectedLine()
 
   # Tear down any state and detach
