@@ -37,8 +37,7 @@ class HighlightLineView extends View
     @updateSelectedLine()
 
   # Tear down any state and detach
-  destroy: (pane) =>
-    return if @editorView.getPane().getItems().length isnt 0
+  destroy: =>
     @unsubscribe()
     @remove()
     @detach()
