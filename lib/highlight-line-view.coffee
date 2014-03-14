@@ -2,12 +2,19 @@
 {$} = require 'atom'
 
 lines = []
+underlineStyles = ["solid","dotted","dashed"]
+underlineStyleInUsed = ''
 
 module.exports =
   configDefaults:
     enable: true
-    backgroundRgaColor: "100, 100, 100"
+    backgroundRgbColor: "100, 100, 100"
     opacity: "50%"
+    underline:
+      solid: true
+      dotted: false
+      dashed: false
+    underlineRgbColor: "255, 165, 0"
 
   activate: ->
     atom.workspaceView.eachEditorView (editorView) ->
@@ -27,14 +34,31 @@ class HighlightLineView extends View
     @div class: 'highlight-view hidden'
 
   initialize: (@editorView) ->
-    @defaultBgColor = "100, 100, 100"
+    @defaultColors = {
+      backgroundRgbColor: "100, 100, 100",
+      underlineColor: "255, 165, 0"}
     @defaultOpacity = 50
     @subscribe @editorView, 'cursor:moved', @updateSelectedLine
     @subscribe @editorView, 'selection:changed', @updateSelectedLine
     @subscribe @editorView.getPane(), 'pane:active-item-changed',
       @updateSelectedLine
     @subscribe @editorView, 'core:close', @destroy
+    @updateUnderlineStyle()
+    for underlineStyle in underlineStyles
+      @subscribe atom.config.observe "highlight-line.underline.#{underlineStyle}", callNow:false, @updateSetting
     @updateSelectedLine()
+
+  updateUnderlineStyle: =>
+    underlineStyleInUsed = ''
+    for underlineStyle in underlineStyles
+      if atom.config.get "highlight-line.underline.#{underlineStyle}"
+        underlineStyleInUsed = underlineStyle
+
+  updateSetting: (value) =>
+    if value
+      if underlineStyleInUsed
+        atom.config.set "highlight-line.underline.#{underlineStyleInUsed}",false
+    @updateUnderlineStyle()
 
   # Tear down any state and detach
   destroy: =>
@@ -48,20 +72,23 @@ class HighlightLineView extends View
       @showHighlight()
 
   resetBackground: ->
-    $('.line').css('background-color', '')
+    $('.line').css('background-color', '').css('border-bottom','')
 
   showHighlight: =>
-    rgba = "rgba(#{@wantedColor()}, #{@wantedOpacity()})"
+    bgColor = @wantedColor('backgroundRgbColor')
+    ulColor = @wantedColor('underlineRgbColor')
+    bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
+    ulRgba = "rgba(#{ulColor},1)"
     cursorViews = @editorView.getCursorViews()
     for cursorView in cursorViews
       range = cursorView.getScreenPosition()
       lineElement = @editorView.lineElementForScreenRow(range.row)
-      $(lineElement).attr('style', "background-color: #{rgba}")
+      $(lineElement).attr('style', "background-color: #{bgRgba}; border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};")
 
-  wantedColor: ->
-    wantedColor = atom.config.get('highlight-line.backgroundRgaColor')
+  wantedColor: (color) ->
+    wantedColor = atom.config.get("highlight-line.#{color}")
     if wantedColor?.split(',').length isnt 3
-      wantedColor = @defaultBgColor
+      wantedColor = @defaultColors[color]
     wantedColor
 
   wantedOpacity: ->
