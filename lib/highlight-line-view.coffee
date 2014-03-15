@@ -45,10 +45,13 @@ class HighlightLineView extends View
     @subscribe @editorView, 'core:close', @destroy
     @updateUnderlineStyle()
     for underlineStyle in underlineStyles
-      @subscribe atom.config.observe "highlight-line.underline.#{underlineStyle}", callNow:false, @updateSetting
+      @subscribe atom.config.observe(
+        "highlight-line.underline.#{underlineStyle}",
+        callNow: false,
+        @updateSetting)
     @updateSelectedLine()
 
-  updateUnderlineStyle: =>
+  updateUnderlineStyle: ->
     underlineStyleInUsed = ''
     for underlineStyle in underlineStyles
       if atom.config.get "highlight-line.underline.#{underlineStyle}"
@@ -57,7 +60,9 @@ class HighlightLineView extends View
   updateSetting: (value) =>
     if value
       if underlineStyleInUsed
-        atom.config.set "highlight-line.underline.#{underlineStyleInUsed}",false
+        atom.config.set(
+          "highlight-line.underline.#{underlineStyleInUsed}",
+          false)
     @updateUnderlineStyle()
 
   # Tear down any state and detach
@@ -83,7 +88,10 @@ class HighlightLineView extends View
     for cursorView in cursorViews
       range = cursorView.getScreenPosition()
       lineElement = @editorView.lineElementForScreenRow(range.row)
-      $(lineElement).attr('style', "background-color: #{bgRgba}; border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};")
+      $(lineElement).attr(
+        'style',
+        "background-color: #{bgRgba};" +
+          "border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};")
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
