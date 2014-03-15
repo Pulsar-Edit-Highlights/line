@@ -11,7 +11,7 @@ module.exports =
     backgroundRgbColor: "100, 100, 100"
     opacity: "50%"
     underline:
-      solid: true
+      solid: false
       dotted: false
       dashed: false
     underlineRgbColor: "255, 165, 0"
@@ -42,13 +42,16 @@ class HighlightLineView extends View
     @subscribe @editorView, 'selection:changed', @updateSelectedLine
     @subscribe @editorView.getPane(), 'pane:active-item-changed',
       @updateSelectedLine
-    @subscribe @editorView, 'core:close', @destroy
+    atom.workspaceView.on 'pane:item-removed', @destroy
     @updateUnderlineStyle()
     for underlineStyle in underlineStyles
-      @subscribe atom.config.observe "highlight-line.underline.#{underlineStyle}", callNow:false, @updateSetting
+      @subscribe atom.config.observe(
+        "highlight-line.underline.#{underlineStyle}",
+        callNow: false,
+        @updateSetting)
     @updateSelectedLine()
 
-  updateUnderlineStyle: =>
+  updateUnderlineStyle: ->
     underlineStyleInUsed = ''
     for underlineStyle in underlineStyles
       if atom.config.get "highlight-line.underline.#{underlineStyle}"
@@ -57,11 +60,18 @@ class HighlightLineView extends View
   updateSetting: (value) =>
     if value
       if underlineStyleInUsed
-        atom.config.set "highlight-line.underline.#{underlineStyleInUsed}",false
+        atom.config.set(
+          "highlight-line.underline.#{underlineStyleInUsed}",
+          false)
     @updateUnderlineStyle()
 
   # Tear down any state and detach
   destroy: =>
+    found = false
+    for editor in atom.workspaceView.getEditorViews()
+      found = true if editor.id is @editorView.id
+    return if found
+    atom.workspaceView.off 'pane:item-removed', @destroy
     @unsubscribe()
     @remove()
     @detach()
@@ -83,7 +93,10 @@ class HighlightLineView extends View
     for cursorView in cursorViews
       range = cursorView.getScreenPosition()
       lineElement = @editorView.lineElementForScreenRow(range.row)
-      $(lineElement).attr('style', "background-color: #{bgRgba}; border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};")
+      $(lineElement).attr(
+        'style',
+        "background-color: #{bgRgba};" +
+          "border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};")
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
