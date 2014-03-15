@@ -82,7 +82,9 @@ class HighlightLineView extends View
       @showHighlight()
 
   resetBackground: ->
-    $('.line').css('background-color', '').css('border-bottom','')
+    $('.line').css('background-color', '')
+              .css('border-bottom','')
+              .css('margin-bottom','')
 
   showHighlight: =>
     bgColor = @wantedColor('backgroundRgbColor')
@@ -96,7 +98,8 @@ class HighlightLineView extends View
       $(lineElement).attr(
         'style',
         "background-color: #{bgRgba};" +
-          "border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};")
+          "border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};" +
+          "margin-bottom: -1px;")
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
