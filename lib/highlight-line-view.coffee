@@ -42,7 +42,7 @@ class HighlightLineView extends View
     @subscribe @editorView, 'selection:changed', @updateSelectedLine
     @subscribe @editorView.getPane(), 'pane:active-item-changed',
       @updateSelectedLine
-    @subscribe @editorView, 'core:close', @destroy
+    atom.workspaceView.on 'pane:item-removed', @destroy
     @updateUnderlineStyle()
     for underlineStyle in underlineStyles
       @subscribe atom.config.observe(
@@ -67,6 +67,11 @@ class HighlightLineView extends View
 
   # Tear down any state and detach
   destroy: =>
+    found = false
+    for editor in atom.workspaceView.getEditorViews()
+      found = true if editor.id is @editorView.id
+    return if found
+    atom.workspaceView.off 'pane:item-removed', @destroy
     @unsubscribe()
     @remove()
     @detach()
