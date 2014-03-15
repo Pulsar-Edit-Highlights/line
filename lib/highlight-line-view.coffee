@@ -11,7 +11,7 @@ module.exports =
     backgroundRgbColor: "100, 100, 100"
     opacity: "50%"
     underline:
-      solid: true
+      solid: false
       dotted: false
       dashed: false
     underlineRgbColor: "255, 165, 0"
