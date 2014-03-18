@@ -7,6 +7,7 @@ underlineStyleInUsed = ''
 
 module.exports =
   configDefaults:
+    allEnable: true
     enableBackgroundColor: true
     backgroundRgbColor: "100, 100, 100"
     opacity: "50%"
@@ -80,7 +81,8 @@ class HighlightLineView extends View
 
   updateSelectedLine: =>
     @resetBackground()
-    @showHighlight()
+    if atom.config.get('highlight-line.allEnable')
+      @showHighlight()
 
   resetBackground: ->
     $('.line').css('background-color', '')
@@ -93,7 +95,7 @@ class HighlightLineView extends View
       bgColor = @wantedColor('backgroundRgbColor')
       bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
       styleAttr += "background-color: #{bgRgba};"
-    if underlineStyleInUsed isnt
+    if underlineStyleInUsed
       ulColor = @wantedColor('underlineRgbColor')
       ulRgba = "rgba(#{ulColor},1)"
       styleAttr += "border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};"
