@@ -7,7 +7,7 @@ underlineStyleInUsed = ''
 
 module.exports =
   configDefaults:
-    enable: true
+    enableBackgroundColor: true
     backgroundRgbColor: "100, 100, 100"
     opacity: "50%"
     underline:
@@ -80,28 +80,34 @@ class HighlightLineView extends View
 
   updateSelectedLine: =>
     @resetBackground()
-    if atom.config.get('highlight-line.enable')
-      @showHighlight()
+    @showHighlight()
 
   resetBackground: ->
     $('.line').css('background-color', '')
               .css('border-bottom','')
               .css('margin-bottom','')
 
+  makeLineStyleAttr: ->
+    styleAttr = ''
+    if atom.config.get('highlight-line.enableBackgroundColor')
+      bgColor = @wantedColor('backgroundRgbColor')
+      bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
+      styleAttr += "background-color: #{bgRgba};"
+    if underlineStyleInUsed isnt
+      ulColor = @wantedColor('underlineRgbColor')
+      ulRgba = "rgba(#{ulColor},1)"
+      styleAttr += "border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};"
+      styleAttr += "margin-bottom: #{@marginHeight}px;"
+    styleAttr
+
   showHighlight: =>
-    bgColor = @wantedColor('backgroundRgbColor')
-    ulColor = @wantedColor('underlineRgbColor')
-    bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
-    ulRgba = "rgba(#{ulColor},1)"
-    cursorViews = @editorView.getCursorViews()
-    for cursorView in cursorViews
-      range = cursorView.getScreenPosition()
-      lineElement = @editorView.lineElementForScreenRow(range.row)
-      $(lineElement).attr(
-        'style',
-        "background-color: #{bgRgba};" +
-          "border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};" +
-          "margin-bottom: #{@marginHeight}px;")
+    styleAttr = @makeLineStyleAttr()
+    if styleAttr
+      cursorViews = @editorView.getCursorViews()
+      for cursorView in cursorViews
+        range = cursorView.getScreenPosition()
+        lineElement = @editorView.lineElementForScreenRow(range.row)
+        $(lineElement).attr 'style', styleAttr
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
