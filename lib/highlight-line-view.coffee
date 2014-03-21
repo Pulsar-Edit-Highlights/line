@@ -32,6 +32,7 @@ module.exports =
   deactivate: ->
     for line in lines
       line.destroy()
+      line = null
     lines = []
     atom.workspaceView.off 'highlight-line:toggle-background'
     atom.workspaceView.off 'highlight-line:toggle-underline'
