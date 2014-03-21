@@ -74,7 +74,7 @@ class HighlightLineView extends View
         underlineStyleInUse = underlineStyle
         @marginHeight = -1
 
-  updateSetting: (value) =>
+  updateUnderlineSetting: (value) =>
     if value
       if underlineStyleInUse
         atom.config.set(
@@ -148,7 +148,7 @@ class HighlightLineView extends View
       @subscribe atom.config.observe(
         "highlight-line.underline.#{underlineStyle}",
         callNow: false,
-        @updateSetting)
+        @updateUnderlineSetting)
 
     @subscribe atom.config.observe(
       "highlight-line.enableBackgroundColor",
