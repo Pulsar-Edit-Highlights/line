@@ -109,7 +109,8 @@ class HighlightLineView extends View
       for cursorView in cursorViews
         range = cursorView.getScreenPosition()
         lineElement = @editorView.lineElementForScreenRow(range.row)
-        $(lineElement).attr 'style', styleAttr
+        if @editorView.editor.getSelection().isSingleScreenLine()
+          $(lineElement).attr 'style', styleAttr
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
