@@ -124,6 +124,4 @@ class HighlightLineView extends View
       wantedOpacity = parseFloat(wantedOpacity)
     else
       wantedOpacity = @defaultOpacity
-    if wantedOpacity isnt 100
-      wantedOpacity = "0.#{wantedOpacity}"
-    wantedOpacity
+    (wantedOpacity/100).toString()
