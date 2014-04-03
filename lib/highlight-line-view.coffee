@@ -8,6 +8,7 @@ underlineStyleInUse = ''
 module.exports =
   configDefaults:
     enableBackgroundColor: true
+    hideHighlightOnSelect: false
     backgroundRgbColor: "100, 100, 100"
     opacity: "50%"
     enableUnderline: false
@@ -106,10 +107,14 @@ class HighlightLineView extends View
   makeLineStyleAttr: ->
     styleAttr = ''
     if atom.config.get('highlight-line.enableBackgroundColor')
-      bgColor = @wantedColor('backgroundRgbColor')
-      bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
-      styleAttr += "background-color: #{bgRgba};"
-
+      show = true
+      if atom.config.get('highlight-line.hideHighlightOnSelect')
+        if !atom.workspace.getActiveEditor()?.getSelection().isEmpty()
+          show = false
+      if show
+        bgColor = @wantedColor('backgroundRgbColor')
+        bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
+        styleAttr += "background-color: #{bgRgba};"
     if atom.config.get('highlight-line.enableUnderline') and underlineStyleInUse
       ulColor = @wantedColor('underlineRgbColor')
       ulRgba = "rgba(#{ulColor},1)"
@@ -124,7 +129,8 @@ class HighlightLineView extends View
       for cursorView in cursorViews
         range = cursorView.getScreenPosition()
         lineElement = @editorView.lineElementForScreenRow(range.row)
-        $(lineElement).attr 'style', styleAttr
+        if @editorView.editor.getSelection()?.isSingleScreenLine()
+          $(lineElement).attr 'style', styleAttr
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
@@ -138,9 +144,7 @@ class HighlightLineView extends View
       wantedOpacity = parseFloat(wantedOpacity)
     else
       wantedOpacity = @defaultOpacity
-    if wantedOpacity isnt 100
-      wantedOpacity = "0.#{wantedOpacity}"
-    wantedOpacity
+    (wantedOpacity/100).toString()
 
   observeSettings: =>
     for underlineStyle in underlineStyles
