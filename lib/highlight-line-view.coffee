@@ -95,7 +95,7 @@ class HighlightLineView extends View
     if atom.config.get('highlight-line.enableBackgroundColor')
       show = true
       if atom.config.get('highlight-line.hideHighlightOnSelect')
-        if !atom.workspace.getActiveEditor().getSelection().isEmpty()
+        if !atom.workspace.getActiveEditor()?.getSelection().isEmpty()
           show = false
       if show
         bgColor = @wantedColor('backgroundRgbColor')
@@ -115,7 +115,7 @@ class HighlightLineView extends View
       for cursorView in cursorViews
         range = cursorView.getScreenPosition()
         lineElement = @editorView.lineElementForScreenRow(range.row)
-        if @editorView.editor.getSelection().isSingleScreenLine()
+        if @editorView.editor.getSelection()?.isSingleScreenLine()
           $(lineElement).attr 'style', styleAttr
 
   wantedColor: (color) ->
