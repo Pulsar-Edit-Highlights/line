@@ -18,6 +18,6 @@ you can edit the colour and type of line.
 I've added some basic options to change the colour and opacity for the line.
 Also, It's now possible to Enable and Disable the line.
 
-## Todo
+You can now toggle the highlighted line by:  ```cmd+alt+H```
 
-- Add menu and hotkey mappings for enabling/disabling the highlight.
+You can now toggle the underline by:  ```cmd+alt+U```
