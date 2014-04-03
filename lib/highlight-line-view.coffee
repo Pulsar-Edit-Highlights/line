@@ -3,15 +3,15 @@
 
 lines = []
 underlineStyles = ["solid","dotted","dashed"]
-underlineStyleInUsed = ''
+underlineStyleInUse = ''
 
 module.exports =
   configDefaults:
-    allEnable: true
     enableBackgroundColor: true
     hideHighlightOnSelect: false
     backgroundRgbColor: "100, 100, 100"
     opacity: "50%"
+    enableUnderline: false
     underline:
       solid: false
       dotted: false
@@ -25,10 +25,26 @@ module.exports =
         lines.push line
         editorView.underlayer.append(line)
 
+    atom.workspaceView.command 'highlight-line:toggle-background', '.editor', =>
+      @toggleHighlight()
+    atom.workspaceView.command 'highlight-line:toggle-underline', '.editor', =>
+      @toggleUnderline()
+
   deactivate: ->
     for line in lines
       line.destroy()
+      line = null
     lines = []
+    atom.workspaceView.off 'highlight-line:toggle-background'
+    atom.workspaceView.off 'highlight-line:toggle-underline'
+
+  toggleHighlight: ->
+    current = atom.config.get('highlight-line.enableBackgroundColor')
+    atom.config.set('highlight-line.enableBackgroundColor', not current)
+
+  toggleUnderline: ->
+    current = atom.config.get('highlight-line.enableUnderline')
+    atom.config.set('highlight-line.enableUnderline', not current)
 
 class HighlightLineView extends View
 
@@ -40,34 +56,33 @@ class HighlightLineView extends View
       backgroundRgbColor: "100, 100, 100",
       underlineColor: "255, 165, 0"}
     @defaultOpacity = 50
+
     @subscribe @editorView, 'cursor:moved', @updateSelectedLine
     @subscribe @editorView, 'selection:changed', @updateSelectedLine
     @subscribe @editorView.getPane(), 'pane:active-item-changed',
       @updateSelectedLine
     atom.workspaceView.on 'pane:item-removed', @destroy
+
     @updateUnderlineStyle()
-    for underlineStyle in underlineStyles
-      @subscribe atom.config.observe(
-        "highlight-line.underline.#{underlineStyle}",
-        callNow: false,
-        @updateSetting)
+    @observeSettings()
     @updateSelectedLine()
 
   updateUnderlineStyle: ->
-    underlineStyleInUsed = ''
+    underlineStyleInUse = ''
     @marginHeight = 0
     for underlineStyle in underlineStyles
       if atom.config.get "highlight-line.underline.#{underlineStyle}"
-        underlineStyleInUsed = underlineStyle
+        underlineStyleInUse = underlineStyle
         @marginHeight = -1
 
-  updateSetting: (value) =>
+  updateUnderlineSetting: (value) =>
     if value
-      if underlineStyleInUsed
+      if underlineStyleInUse
         atom.config.set(
-          "highlight-line.underline.#{underlineStyleInUsed}",
+          "highlight-line.underline.#{underlineStyleInUse}",
           false)
     @updateUnderlineStyle()
+    @updateSelectedLine()
 
   # Tear down any state and detach
   destroy: =>
@@ -82,8 +97,7 @@ class HighlightLineView extends View
 
   updateSelectedLine: =>
     @resetBackground()
-    if atom.config.get('highlight-line.allEnable')
-      @showHighlight()
+    @showHighlight()
 
   resetBackground: ->
     $('.line').css('background-color', '')
@@ -101,10 +115,10 @@ class HighlightLineView extends View
         bgColor = @wantedColor('backgroundRgbColor')
         bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
         styleAttr += "background-color: #{bgRgba};"
-    if underlineStyleInUsed
+    if atom.config.get('highlight-line.enableUnderline') and underlineStyleInUse
       ulColor = @wantedColor('underlineRgbColor')
       ulRgba = "rgba(#{ulColor},1)"
-      styleAttr += "border-bottom: 1px #{underlineStyleInUsed} #{ulRgba};"
+      styleAttr += "border-bottom: 1px #{underlineStyleInUse} #{ulRgba};"
       styleAttr += "margin-bottom: #{@marginHeight}px;"
     styleAttr
 
@@ -131,3 +145,19 @@ class HighlightLineView extends View
     else
       wantedOpacity = @defaultOpacity
     (wantedOpacity/100).toString()
+
+  observeSettings: =>
+    for underlineStyle in underlineStyles
+      @subscribe atom.config.observe(
+        "highlight-line.underline.#{underlineStyle}",
+        callNow: false,
+        @updateUnderlineSetting)
+
+    @subscribe atom.config.observe(
+      "highlight-line.enableBackgroundColor",
+      callNow: false,
+      @updateSelectedLine)
+    @subscribe atom.config.observe(
+      "highlight-line.enableUnderline",
+      callNow: false,
+      @updateSelectedLine)

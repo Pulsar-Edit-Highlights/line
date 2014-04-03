@@ -1,0 +1,18 @@
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Highlight Line'
+      'submenu': [
+        {
+          'label': 'Toggle Background'
+          'command': 'highlight-line:toggle-background'
+        },
+        {
+          'label': 'Toggle Underline'
+          'command': 'highlight-line:toggle-underline'
+        }
+      ]
+    ]
+  }
+]
