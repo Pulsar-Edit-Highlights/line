@@ -9,6 +9,7 @@ module.exports =
   configDefaults:
     allEnable: true
     enableBackgroundColor: true
+    hideHighlightOnSelect: false
     backgroundRgbColor: "100, 100, 100"
     opacity: "50%"
     underline:
@@ -92,9 +93,14 @@ class HighlightLineView extends View
   makeLineStyleAttr: ->
     styleAttr = ''
     if atom.config.get('highlight-line.enableBackgroundColor')
-      bgColor = @wantedColor('backgroundRgbColor')
-      bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
-      styleAttr += "background-color: #{bgRgba};"
+      show = true
+      if atom.config.get('highlight-line.hideHighlightOnSelect')
+        if !atom.workspace.getActiveEditor().getSelection().isEmpty()
+          show = false
+      if show
+        bgColor = @wantedColor('backgroundRgbColor')
+        bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
+        styleAttr += "background-color: #{bgRgba};"
     if underlineStyleInUsed
       ulColor = @wantedColor('underlineRgbColor')
       ulRgba = "rgba(#{ulColor},1)"
