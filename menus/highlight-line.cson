@@ -11,6 +11,10 @@
         {
           'label': 'Toggle Underline'
           'command': 'highlight-line:toggle-underline'
+        },
+        {
+          'label': 'Toggle Selection Borders'
+          'command': 'highlight-line:toggle-selection-borders'
         }
       ]
     ]
