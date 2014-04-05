@@ -9,6 +9,10 @@
           'command': 'highlight-line:toggle-background'
         },
         {
+          'label': 'Toggle Hide Highlight on Select'
+          'command': 'highlight-line:toggle-hide-highlight-on-select'
+        },
+        {
           'label': 'Toggle Underline'
           'command': 'highlight-line:toggle-underline'
         },

@@ -28,6 +28,8 @@ module.exports =
 
     atom.workspaceView.command 'highlight-line:toggle-background', '.editor', =>
       @toggleHighlight()
+    atom.workspaceView.command 'highlight-line:toggle-hide-highlight-on-select', '.editor', =>
+      @toggleHideHighlightOnSelect()
     atom.workspaceView.command 'highlight-line:toggle-underline', '.editor', =>
       @toggleUnderline()
     atom.workspaceView.command 'highlight-line:toggle-selection-borders', '.editor', =>
@@ -45,6 +47,10 @@ module.exports =
   toggleHighlight: ->
     current = atom.config.get('highlight-line.enableBackgroundColor')
     atom.config.set('highlight-line.enableBackgroundColor', not current)
+
+  toggleHideHighlightOnSelect: ->
+    current = atom.config.get('highlight-line.hideHighlightOnSelect')
+    atom.config.set('highlight-line.hideHighlightOnSelect', not current)
 
   toggleUnderline: ->
     current = atom.config.get('highlight-line.enableUnderline')
@@ -187,6 +193,10 @@ class HighlightLineView extends View
 
     @subscribe atom.config.observe(
       "highlight-line.enableBackgroundColor",
+      callNow: false,
+      @updateSelectedLine)
+    @subscribe atom.config.observe(
+      "highlight-line.hideHighlightOnSelect",
       callNow: false,
       @updateSelectedLine)
     @subscribe atom.config.observe(
