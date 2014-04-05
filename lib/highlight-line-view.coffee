@@ -118,6 +118,7 @@ class HighlightLineView extends View
               .css('border-top','')
               .css('border-bottom','')
               .css('margin-bottom','')
+              .css('margin-top','')
 
   makeLineStyleAttr: ->
     styleAttr = ''
@@ -142,9 +143,8 @@ class HighlightLineView extends View
     if underlineStyleInUse
       ulColor = @wantedColor('underlineRgbColor')
       ulRgba = "rgba(#{ulColor},1)"
-      styleAttr += "margin-bottom: #{@marginHeight}px;"
-      topStyleAttr = styleAttr
-      bottomStyleAttr = styleAttr
+      topStyleAttr = "margin-top: #{@marginHeight}px;"
+      bottomStyleAttr = "margin-bottom: #{@marginHeight}px;"
       topStyleAttr += "border-top: 1px #{underlineStyleInUse} #{ulRgba};"
       bottomStyleAttr += "border-bottom: 1px #{underlineStyleInUse} #{ulRgba};"
       [topStyleAttr, bottomStyleAttr]
