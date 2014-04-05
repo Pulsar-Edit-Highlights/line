@@ -24,7 +24,7 @@ I've added some basic options to change the colour and opacity for the line.
 Also, It's now possible to Enable and Disable the line.
 
 You can now toggle the highlighted line by:  ```cmd+alt+H```
-You can now toggle the hiding the hightlight on selecting text by:  ```cmd+shift+alt+H```
+You can now toggle the hiding the highlight on selecting text by:  ```cmd+shift+alt+H```
 
 You can now toggle the underline by:  ```cmd+alt+U```
-You can now toggle the selection borders by:  ```cmd+alt+U```
+You can now toggle the selection borders by:  ```cmd+shift+alt+U```

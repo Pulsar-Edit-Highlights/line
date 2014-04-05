@@ -139,7 +139,7 @@ class HighlightLineView extends View
 
   makeSelectionStyleAttr: ->
     styleAttr = ''
-    if atom.config.get('highlight-line.enableUnderline') and underlineStyleInUse
+    if underlineStyleInUse
       ulColor = @wantedColor('underlineRgbColor')
       ulRgba = "rgba(#{ulColor},1)"
       styleAttr += "margin-bottom: #{@marginHeight}px;"
@@ -156,19 +156,20 @@ class HighlightLineView extends View
       for cursorView in cursorViews
         range = cursorView.getScreenPosition()
         lineElement = @editorView.lineElementForScreenRow(range.row)
-        if @editorView.editor.getSelection()?.isSingleScreenLine()
-          $(lineElement).attr 'style', styleAttr
-        else if atom.config.get('highlight-line.enableSelectionBorder')
-          selectionStyleAttrs = @makeSelectionStyleAttr()
-          selections = @editorView.getSelectionViews()
-          for selection in selections
-            selectionRange = selection.getScreenRange();
-            start = selectionRange.start.row
-            end = selectionRange.end.row
-            startLine = @editorView.lineElementForScreenRow(start)
-            endLine = @editorView.lineElementForScreenRow(end)
-            $(startLine).attr 'style', selectionStyleAttrs[0]
-            $(endLine).attr 'style', selectionStyleAttrs[1]
+        if selection = @editorView.editor.getSelection()
+          if selection.isSingleScreenLine()
+            $(lineElement).attr 'style', styleAttr
+          else if atom.config.get('highlight-line.enableSelectionBorder')
+            selectionStyleAttrs = @makeSelectionStyleAttr()
+            selections = @editorView.getSelectionViews()
+            for selection in selections
+              selectionRange = selection.getScreenRange()
+              start = selectionRange.start.row
+              end = selectionRange.end.row
+              startLine = @editorView.lineElementForScreenRow(start)
+              endLine = @editorView.lineElementForScreenRow(end)
+              $(startLine).attr 'style', selectionStyleAttrs[0]
+              $(endLine).attr 'style', selectionStyleAttrs[1]
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
