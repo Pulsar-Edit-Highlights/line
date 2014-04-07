@@ -118,15 +118,11 @@ class HighlightLineView extends View
               .css('border-top','')
               .css('border-bottom','')
               .css('margin-bottom','')
+              .css('margin-top','')
 
   makeLineStyleAttr: ->
     styleAttr = ''
     if atom.config.get('highlight-line.enableBackgroundColor')
-      show = true
-      if atom.config.get('highlight-line.hideHighlightOnSelect')
-        if !atom.workspace.getActiveEditor()?.getSelection().isEmpty()
-          show = false
-      if show
         bgColor = @wantedColor('backgroundRgbColor')
         bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
         styleAttr += "background-color: #{bgRgba};"
@@ -139,12 +135,11 @@ class HighlightLineView extends View
 
   makeSelectionStyleAttr: ->
     styleAttr = ''
-    if atom.config.get('highlight-line.enableUnderline') and underlineStyleInUse
+    if underlineStyleInUse
       ulColor = @wantedColor('underlineRgbColor')
       ulRgba = "rgba(#{ulColor},1)"
-      styleAttr += "margin-bottom: #{@marginHeight}px;"
-      topStyleAttr = styleAttr
-      bottomStyleAttr = styleAttr
+      topStyleAttr = "margin-top: #{@marginHeight}px;"
+      bottomStyleAttr = "margin-bottom: #{@marginHeight}px;"
       topStyleAttr += "border-top: 1px #{underlineStyleInUse} #{ulRgba};"
       bottomStyleAttr += "border-bottom: 1px #{underlineStyleInUse} #{ulRgba};"
       [topStyleAttr, bottomStyleAttr]
@@ -156,13 +151,13 @@ class HighlightLineView extends View
       for cursorView in cursorViews
         range = cursorView.getScreenPosition()
         lineElement = @editorView.lineElementForScreenRow(range.row)
-        if @editorView.editor.getSelection()?.isSingleScreenLine()
-          $(lineElement).attr 'style', styleAttr
-        else if atom.config.get('highlight-line.enableSelectionBorder')
-          selectionStyleAttrs = @makeSelectionStyleAttr()
-          selections = @editorView.getSelectionViews()
-          for selection in selections
-            selectionRange = selection.getScreenRange();
+        selections = @editorView.editor.getSelections()
+        for selection in selections
+          if selection.isSingleScreenLine()
+            $(lineElement).attr 'style', styleAttr
+          else if atom.config.get('highlight-line.enableSelectionBorder')
+            selectionStyleAttrs = @makeSelectionStyleAttr()
+            selectionRange = selection.getScreenRange()
             start = selectionRange.start.row
             end = selectionRange.end.row
             startLine = @editorView.lineElementForScreenRow(start)
