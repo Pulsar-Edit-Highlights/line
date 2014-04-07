@@ -12,6 +12,7 @@ module.exports =
     backgroundRgbColor: "100, 100, 100"
     opacity: "50%"
     enableUnderline: false
+    enableSelectionBorder: false
     underline:
       solid: false
       dotted: false
@@ -27,8 +28,12 @@ module.exports =
 
     atom.workspaceView.command 'highlight-line:toggle-background', '.editor', =>
       @toggleHighlight()
+    atom.workspaceView.command 'highlight-line:toggle-hide-highlight-on-select', '.editor', =>
+      @toggleHideHighlightOnSelect()
     atom.workspaceView.command 'highlight-line:toggle-underline', '.editor', =>
       @toggleUnderline()
+    atom.workspaceView.command 'highlight-line:toggle-selection-borders', '.editor', =>
+      @toggleSelectionBorders()
 
   deactivate: ->
     for line in lines
@@ -37,14 +42,23 @@ module.exports =
     lines = []
     atom.workspaceView.off 'highlight-line:toggle-background'
     atom.workspaceView.off 'highlight-line:toggle-underline'
+    atom.workspaceView.off 'highlight-line:toggle-selection-borders'
 
   toggleHighlight: ->
     current = atom.config.get('highlight-line.enableBackgroundColor')
     atom.config.set('highlight-line.enableBackgroundColor', not current)
 
+  toggleHideHighlightOnSelect: ->
+    current = atom.config.get('highlight-line.hideHighlightOnSelect')
+    atom.config.set('highlight-line.hideHighlightOnSelect', not current)
+
   toggleUnderline: ->
     current = atom.config.get('highlight-line.enableUnderline')
     atom.config.set('highlight-line.enableUnderline', not current)
+
+  toggleSelectionBorders: ->
+    current = atom.config.get('highlight-line.enableSelectionBorder')
+    atom.config.set('highlight-line.enableSelectionBorder', not current)
 
 class HighlightLineView extends View
 
@@ -101,17 +115,14 @@ class HighlightLineView extends View
 
   resetBackground: ->
     $('.line').css('background-color', '')
+              .css('border-top','')
               .css('border-bottom','')
               .css('margin-bottom','')
+              .css('margin-top','')
 
   makeLineStyleAttr: ->
     styleAttr = ''
     if atom.config.get('highlight-line.enableBackgroundColor')
-      show = true
-      if atom.config.get('highlight-line.hideHighlightOnSelect')
-        if !atom.workspace.getActiveEditor()?.getSelection().isEmpty()
-          show = false
-      if show
         bgColor = @wantedColor('backgroundRgbColor')
         bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
         styleAttr += "background-color: #{bgRgba};"
@@ -122,6 +133,17 @@ class HighlightLineView extends View
       styleAttr += "margin-bottom: #{@marginHeight}px;"
     styleAttr
 
+  makeSelectionStyleAttr: ->
+    styleAttr = ''
+    if underlineStyleInUse
+      ulColor = @wantedColor('underlineRgbColor')
+      ulRgba = "rgba(#{ulColor},1)"
+      topStyleAttr = "margin-top: #{@marginHeight}px;"
+      bottomStyleAttr = "margin-bottom: #{@marginHeight}px;"
+      topStyleAttr += "border-top: 1px #{underlineStyleInUse} #{ulRgba};"
+      bottomStyleAttr += "border-bottom: 1px #{underlineStyleInUse} #{ulRgba};"
+      [topStyleAttr, bottomStyleAttr]
+
   showHighlight: =>
     styleAttr = @makeLineStyleAttr()
     if styleAttr
@@ -129,8 +151,19 @@ class HighlightLineView extends View
       for cursorView in cursorViews
         range = cursorView.getScreenPosition()
         lineElement = @editorView.lineElementForScreenRow(range.row)
-        if @editorView.editor.getSelection()?.isSingleScreenLine()
-          $(lineElement).attr 'style', styleAttr
+        selections = @editorView.editor.getSelections()
+        for selection in selections
+          if selection.isSingleScreenLine()
+            $(lineElement).attr 'style', styleAttr
+          else if atom.config.get('highlight-line.enableSelectionBorder')
+            selectionStyleAttrs = @makeSelectionStyleAttr()
+            selectionRange = selection.getScreenRange()
+            start = selectionRange.start.row
+            end = selectionRange.end.row
+            startLine = @editorView.lineElementForScreenRow(start)
+            endLine = @editorView.lineElementForScreenRow(end)
+            $(startLine).attr 'style', selectionStyleAttrs[0]
+            $(endLine).attr 'style', selectionStyleAttrs[1]
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
@@ -158,6 +191,14 @@ class HighlightLineView extends View
       callNow: false,
       @updateSelectedLine)
     @subscribe atom.config.observe(
+      "highlight-line.hideHighlightOnSelect",
+      callNow: false,
+      @updateSelectedLine)
+    @subscribe atom.config.observe(
       "highlight-line.enableUnderline",
+      callNow: false,
+      @updateSelectedLine)
+    @subscribe atom.config.observe(
+      "highlight-line.enableSelectionBorder",
       callNow: false,
       @updateSelectedLine)
