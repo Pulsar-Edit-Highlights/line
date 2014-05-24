@@ -1,4 +1,4 @@
-{EditorView, View} = require 'atom'
+{ReactEditorView, EditorView, View} = require 'atom'
 {$} = require 'atom'
 
 lines = []
@@ -152,24 +152,50 @@ class HighlightLineView extends View
   showHighlight: =>
     styleAttr = @makeLineStyleAttr()
     if styleAttr
-      cursorViews = @editorView.getCursorViews()
-      for cursorView in cursorViews
-        range = cursorView.getScreenPosition()
-        lineElement = @editorView.lineElementForScreenRow(range.row)
+      if @editorView.getCursorViews?
+        cursors = @editorView.getCursorViews()
+      else
+        editor = @editorView.getEditor()
+        cursors = editor.getCursors()
+      for cursor in cursors
+        range = cursor.getScreenPosition()
+        lineElement = @findLineElementForRow(@editorView, range.row)
         if selection = @editorView.editor.getSelection()
           if selection.isSingleScreenLine()
+            if @editorView.constructor.name is "ReactEditorView"
+              pos = $(lineElement).css("position")
+              topPX = $(lineElement).css("top")
+              styleAttr += "position: #{pos}; top: #{topPX}; width: 100%"
+
             $(lineElement).attr 'style', styleAttr
           else if atom.config.get('highlight-line.enableSelectionBorder')
             selectionStyleAttrs = @makeSelectionStyleAttr()
-            selections = @editorView.getSelectionViews()
+            selections = @editorView.editor.getSelections()
             for selection in selections
               selectionRange = selection.getScreenRange()
               start = selectionRange.start.row
               end = selectionRange.end.row
-              startLine = @editorView.lineElementForScreenRow(start)
-              endLine = @editorView.lineElementForScreenRow(end)
+
+              startLine = @findLineElementForRow(@editorView, start)
+              endLine = @findLineElementForRow(@editorView, end)
+              if @editorView.constructor.name is "ReactEditorView"
+                pos = $(startLine).css("position")
+                topPX = $(startLine).css("top")
+                selectionStyleAttrs[0] += "position: #{pos}; top: #{topPX}; width: 100%"
+                pos = $(endLine).css("position")
+                topPX = $(endLine).css("top")
+                selectionStyleAttrs[1] += "position: #{pos}; top: #{topPX}; width: 100%"
+
               $(startLine).attr 'style', selectionStyleAttrs[0]
               $(endLine).attr 'style', selectionStyleAttrs[1]
+
+
+  findLineElementForRow: (editorView, row) ->
+    if editorView.lineElementForScreenRow?
+      editorView.lineElementForScreenRow(row)
+    else
+      # For React Editor
+      editorView.find(".line[data-screen-row='#{row}']")
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
