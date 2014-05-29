@@ -194,8 +194,7 @@ class HighlightLineView extends View
     if editorView.lineElementForScreenRow?
       editorView.lineElementForScreenRow(row)
     else
-      # For React Editor
-      editorView.find(".line[data-screen-row='#{row}']")
+      editorView.component.lineNodeForScreenRow(row)
 
   wantedColor: (color) ->
     wantedColor = atom.config.get("highlight-line.#{color}")
