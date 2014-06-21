@@ -140,14 +140,14 @@ class HighlightLineView extends View
 
   makeSelectionStyleAttr: ->
     styleAttr = ''
-    if underlineStyleInUse
-      ulColor = @wantedColor('underlineRgbColor')
-      ulRgba = "rgba(#{ulColor},1)"
-      topStyleAttr = "margin-top: #{@marginHeight}px;"
-      bottomStyleAttr = "margin-bottom: #{@marginHeight}px;"
-      topStyleAttr += "border-top: 1px #{underlineStyleInUse} #{ulRgba};"
-      bottomStyleAttr += "border-bottom: 1px #{underlineStyleInUse} #{ulRgba};"
-      [topStyleAttr, bottomStyleAttr]
+    return [] unless underlineStyleInUse
+    ulColor = @wantedColor('underlineRgbColor')
+    ulRgba = "rgba(#{ulColor},1)"
+    topStyleAttr = "margin-top: #{@marginHeight}px;"
+    bottomStyleAttr = "margin-bottom: #{@marginHeight}px;"
+    topStyleAttr += "border-top: 1px #{underlineStyleInUse} #{ulRgba};"
+    bottomStyleAttr += "border-bottom: 1px #{underlineStyleInUse} #{ulRgba};"
+    [topStyleAttr, bottomStyleAttr]
 
   showHighlight: =>
     styleAttr = @makeLineStyleAttr()
@@ -170,6 +170,7 @@ class HighlightLineView extends View
             $(lineElement).attr 'style', styleAttr
           else if atom.config.get('highlight-line.enableSelectionBorder')
             selectionStyleAttrs = @makeSelectionStyleAttr()
+            return if selectionStyleAttrs.length is 0
             selections = @editorView.editor.getSelections()
             for selection in selections
               selectionRange = selection.getScreenRange()
