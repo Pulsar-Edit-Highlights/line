@@ -115,7 +115,7 @@ class HighlightLineView extends View
               .css('border-bottom','')
               .css('margin-bottom','')
               .css('margin-top','')
-    $('.line').each (index, line) ->
+    $('.line[data-screen-row]').each (index, line) ->
       if $(line).attr('style')?.indexOf('background') isnt -1
         top = $(line).css('top')
         $(line).attr 'style', "position: absolute; top: #{top};" if top?
