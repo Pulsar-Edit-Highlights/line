@@ -71,10 +71,7 @@ class HighlightLineView extends View
       underlineColor: "255, 165, 0"}
     @defaultOpacity = 50
 
-    @subscribe @editorView, 'cursor:moved', @updateSelectedLine
-    @subscribe @editorView, 'selection:changed', @updateSelectedLine
-    @subscribe @editorView.getPane(), 'pane:active-item-changed',
-      @updateSelectedLine
+    @subscribe @editorView, 'editor:display-updated', @updateSelectedLine
     atom.workspaceView.on 'pane:item-removed', @destroy
 
     @updateUnderlineStyle()
@@ -114,11 +111,14 @@ class HighlightLineView extends View
     @showHighlight()
 
   resetBackground: ->
-    $('.line').css('background-color', '')
-              .css('border-top','')
+    $('.line').css('border-top','')
               .css('border-bottom','')
               .css('margin-bottom','')
               .css('margin-top','')
+    $('.line').each (index, line) ->
+      if $(line).attr('style')?.indexOf('background') isnt -1
+        top = $(line).css('top')
+        $(line).attr 'style', "position: absolute; top: #{top};" if top?
 
   makeLineStyleAttr: ->
     styleAttr = ''
@@ -130,7 +130,7 @@ class HighlightLineView extends View
       if show
         bgColor = @wantedColor('backgroundRgbColor')
         bgRgba = "rgba(#{bgColor}, #{@wantedOpacity()})"
-        styleAttr += "background-color: #{bgRgba};"
+        styleAttr += "background: #{bgRgba} !important;"
     if atom.config.get('highlight-line.enableUnderline') and underlineStyleInUse
       ulColor = @wantedColor('underlineRgbColor')
       ulRgba = "rgba(#{ulColor},1)"
@@ -163,9 +163,8 @@ class HighlightLineView extends View
         if selection = @editorView.editor.getSelection()
           if selection.isSingleScreenLine()
             if @editorView.constructor.name is "ReactEditorView"
-              pos = $(lineElement).css("position")
               topPX = $(lineElement).css("top")
-              styleAttr += "position: #{pos}; top: #{topPX}; width: 100%"
+              styleAttr += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
 
             $(lineElement).attr 'style', styleAttr
           else if atom.config.get('highlight-line.enableSelectionBorder')
@@ -180,12 +179,10 @@ class HighlightLineView extends View
               startLine = @findLineElementForRow(@editorView, start)
               endLine = @findLineElementForRow(@editorView, end)
               if @editorView.constructor.name is "ReactEditorView"
-                pos = $(startLine).css("position")
                 topPX = $(startLine).css("top")
-                selectionStyleAttrs[0] += "position: #{pos}; top: #{topPX}; width: 100%"
-                pos = $(endLine).css("position")
+                selectionStyleAttrs[0] += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
                 topPX = $(endLine).css("top")
-                selectionStyleAttrs[1] += "position: #{pos}; top: #{topPX}; width: 100%"
+                selectionStyleAttrs[1] += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
 
               $(startLine).attr 'style', selectionStyleAttrs[0]
               $(endLine).attr 'style', selectionStyleAttrs[1]
