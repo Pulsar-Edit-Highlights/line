@@ -162,31 +162,37 @@ class HighlightLineView extends View
         lineElement = @findLineElementForRow(@editorView, range.row)
         if selection = @editorView.editor.getSelection()
           if selection.isSingleScreenLine()
-            if @editorView.constructor.name is "ReactEditorView"
-              topPX = $(lineElement).css("top")
-              styleAttr += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
-
-            $(lineElement).attr 'style', styleAttr
+            @handleSingleLine(lineElement, styleAttr)
           else if atom.config.get('highlight-line.enableSelectionBorder')
-            selectionStyleAttrs = @makeSelectionStyleAttr()
-            return if selectionStyleAttrs.length is 0
-            selections = @editorView.editor.getSelections()
-            for selection in selections
-              selectionRange = selection.getScreenRange()
-              start = selectionRange.start.row
-              end = selectionRange.end.row
+            @handleMultiLine(styleAttr)
 
-              startLine = @findLineElementForRow(@editorView, start)
-              endLine = @findLineElementForRow(@editorView, end)
-              if @editorView.constructor.name is "ReactEditorView"
-                topPX = $(startLine).css("top")
-                selectionStyleAttrs[0] += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
-                topPX = $(endLine).css("top")
-                selectionStyleAttrs[1] += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
 
-              $(startLine).attr 'style', selectionStyleAttrs[0]
-              $(endLine).attr 'style', selectionStyleAttrs[1]
+  handleSingleLine: (lineElement, styleAttr) =>
+    if @editorView.constructor.name is "ReactEditorView"
+      topPX = $(lineElement).css("top")
+      styleAttr += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
 
+    $(lineElement).attr 'style', styleAttr
+
+  handleMultiLine: (styleAttr) =>
+    selectionStyleAttrs = @makeSelectionStyleAttr()
+    return if selectionStyleAttrs.length is 0
+    selections = @editorView.editor.getSelections()
+    for selection in selections
+      selectionRange = selection.getScreenRange()
+      start = selectionRange.start.row
+      end = selectionRange.end.row
+
+      startLine = @findLineElementForRow(@editorView, start)
+      endLine = @findLineElementForRow(@editorView, end)
+      if @editorView.constructor.name is "ReactEditorView"
+        topPX = $(startLine).css("top")
+        selectionStyleAttrs[0] += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
+        topPX = $(endLine).css("top")
+        selectionStyleAttrs[1] += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
+
+      $(startLine).attr 'style', selectionStyleAttrs[0]
+      $(endLine).attr 'style', selectionStyleAttrs[1]
 
   findLineElementForRow: (editorView, row) ->
     if editorView.lineElementForScreenRow?
