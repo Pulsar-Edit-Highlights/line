@@ -111,15 +111,17 @@ class HighlightLineView extends View
     @showHighlight()
 
   resetBackground: ->
-    $('.line').css('background-color','')
-              .css('border-top','')
-              .css('border-bottom','')
-              .css('margin-bottom','')
-              .css('margin-top','')
-    $('.line[data-screen-row]').each (index, line) ->
+    $('.highlight-line-pkg').css('background-color','')
+                            .css('border-top','')
+                            .css('border-bottom','')
+                            .css('margin-bottom','')
+                            .css('margin-top','')
+    $('.highlight-line-pkg[data-screen-row]').each (index, line) ->
       if $(line).attr('style')?.indexOf('background') isnt -1
         top = $(line).css('top')
-        $(line).attr 'style', "position: absolute; top: #{top};" if top?
+        $(line).attr('style', "position: absolute; top: #{top}; " +
+          "width: 100%;") if top?
+    $('.highlight-line-pkg').removeClass('highlight-line-pkg')
 
   makeLineStyleAttr: ->
     styleAttr = ''
@@ -174,6 +176,7 @@ class HighlightLineView extends View
       styleAttr += "position: absolute; top: #{topPX}; width: 100%;" if topPX?
 
     $(lineElement).attr 'style', styleAttr
+    $(lineElement).addClass('highlight-line-pkg')
 
   handleMultiLine: (styleAttr) =>
     selectionStyleAttrs = @makeSelectionStyleAttr()
@@ -194,6 +197,9 @@ class HighlightLineView extends View
 
       $(startLine).attr 'style', selectionStyleAttrs[0]
       $(endLine).attr 'style', selectionStyleAttrs[1]
+
+      $(startLine).addClass('highlight-line-pkg')
+      $(endLine).addClass('highlight-line-pkg')
 
   findLineElementForRow: (editorView, row) ->
     if editorView.lineElementForScreenRow?
