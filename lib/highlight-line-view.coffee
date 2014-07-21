@@ -111,7 +111,8 @@ class HighlightLineView extends View
     @showHighlight()
 
   resetBackground: ->
-    $('.line').css('border-top','')
+    $('.line').css('background-color','')
+              .css('border-top','')
               .css('border-bottom','')
               .css('margin-bottom','')
               .css('margin-top','')
