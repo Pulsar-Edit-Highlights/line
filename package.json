@@ -1,12 +1,12 @@
 {
   "name": "highlight-line",
-  "main": "./lib/highlight-line-view",
+  "main": "./lib/highlight-line",
   "version": "0.7.6",
   "description": "Highlights the current line in the editor",
   "repository": "https://github.com/richrace/highlight-line",
   "license": "MIT",
   "engines": {
-    "atom": ">0.50.0"
+    "atom": ">=0.123.0"
   },
   "dependencies": {},
   "bugs": {

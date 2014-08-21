@@ -2,8 +2,36 @@
 //
 // See https://github.com/atom/atom-dark-ui/blob/master/stylesheets/ui-variables.less
 // for a full listing of what's available.
-@import "ui-variables";
+
+@import "line-colors";
+
+@borderWidth: 1px;
+@marginWidth: -1px;
 
 .highlight-view.hidden {
   display: none;
+}
+
+.highlight-multi-line(@style: '') {
+  .line[class*="highlight-line-multi-line-@{style}-top"] {
+    border-top-style: @style;
+    border-top-width: @borderWidth;
+    border-top-color: @lineColour;
+    margin-top: @marginWidth;
+  }
+  .line[class*="highlight-line-multi-line-@{style}-bottom"] {
+    border-bottom-style: @style;
+    border-bottom-width: @borderWidth;
+    border-bottom-color: @lineColour;
+    margin-bottom: @marginWidth;
+  }
+}
+
+.editor {
+  .line.highlight-line {
+    background: @cursorBackground !important;
+  }
+  .highlight-multi-line(solid);
+  .highlight-multi-line(dashed);
+  .highlight-multi-line(dotted);
 }
