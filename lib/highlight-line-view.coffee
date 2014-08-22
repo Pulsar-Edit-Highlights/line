@@ -14,7 +14,7 @@ class HighlightLineView extends View
     atom.workspaceView.prependToBottom(this)
 
   initialize: ->
-    atom.workspaceView.on 'cursor:moved', @updateSelectedLine
+    atom.workspaceView.on 'selection:changed', @updateSelectedLine
     atom.workspaceView.on 'pane:active-item-changed', @updateSelectedLine
 
     @markers = []
@@ -44,7 +44,7 @@ class HighlightLineView extends View
 
   # Tear down any state and detach
   destroy: =>
-    atom.workspaceView.off 'cursor:moved', @updateSelectedLine
+    atom.workspaceView.off 'selection:changed', @updateSelectedLine
     @unsubscribe()
     @remove()
     @detach()
