@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/richrace/highlight-line.svg?branch=master)](https://travis-ci.org/richrace/highlight-line)
+
 # Highlight Line Package
 
 Highlights the current line in the editor; really simple.
