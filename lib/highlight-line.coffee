@@ -16,14 +16,22 @@ module.exports =
     @line = new HighlightLineView()
     @line.attach()
 
-    atom.workspaceView.command 'highlight-line:toggle-background', '.editor', =>
-      @toggleHighlight()
-    atom.workspaceView.command 'highlight-line:toggle-hide-highlight-on-select', '.editor', =>
-      @toggleHideHighlightOnSelect()
-    atom.workspaceView.command 'highlight-line:toggle-underline', '.editor', =>
-      @toggleUnderline()
-    atom.workspaceView.command 'highlight-line:toggle-selection-borders', '.editor', =>
-      @toggleSelectionBorders()
+    atom.workspaceView.command(
+      'highlight-line:toggle-background', '.editor', =>
+        @toggleHighlight()
+    )
+    atom.workspaceView.command(
+      'highlight-line:toggle-hide-highlight-on-select', '.editor', =>
+        @toggleHideHighlightOnSelect()
+    )
+    atom.workspaceView.command(
+      'highlight-line:toggle-underline', '.editor', =>
+        @toggleUnderline()
+    )
+    atom.workspaceView.command(
+      'highlight-line:toggle-selection-borders', '.editor', =>
+        @toggleSelectionBorders()
+    )
 
   deactivate: ->
     @line.destroy()

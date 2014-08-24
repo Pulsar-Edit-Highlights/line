@@ -73,8 +73,10 @@ class HighlightLineView extends View
         if atom.config.get('highlight-line.enableBackgroundColor')
           @createDecoration(selectionRange)
 
-        if atom.config.get('highlight-line.enableUnderline') and underlineStyleInUse
-          @createDecoration(selectionRange, "-multi-line-#{underlineStyleInUse}-bottom")
+        if atom.config.get('highlight-line.enableUnderline') \
+        and underlineStyleInUse
+          @createDecoration(selectionRange,
+            "-multi-line-#{underlineStyleInUse}-bottom")
 
   handleMultiLine: =>
     return unless atom.config.get('highlight-line.enableSelectionBorder')
@@ -90,14 +92,17 @@ class HighlightLineView extends View
         topLine.end = topLine.start
         bottomLine.start = bottomLine.end
 
-        @createDecoration(topLine, "-multi-line-#{underlineStyleInUse}-top")
-        @createDecoration(bottomLine, "-multi-line-#{underlineStyleInUse}-bottom")
+        @createDecoration(topLine,
+          "-multi-line-#{underlineStyleInUse}-top")
+        @createDecoration(bottomLine,
+          "-multi-line-#{underlineStyleInUse}-bottom")
 
   createDecoration: (range, klassToAdd = '') =>
     klass = 'highlight-line'
     klass += klassToAdd
     marker = @getEditor().markBufferRange(range)
-    decoration = @getEditor().decorateMarker(marker, {type: 'line', class: klass})
+    decoration = @getEditor()
+      .decorateMarker(marker, {type: 'line', class: klass})
 
     @markers.push marker
 
