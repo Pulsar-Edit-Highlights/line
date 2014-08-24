@@ -9,6 +9,11 @@
     "atom": ">=0.123.0"
   },
   "dependencies": {},
+  "devDependencies": {
+    "coffee-script": "latest",
+    "coffeelint": "latest",
+    "coffeelint-jasmine": "latest"
+  },
   "bugs": {
     "url": "https://github.com/richrace/highlight-line/issues"
   },
