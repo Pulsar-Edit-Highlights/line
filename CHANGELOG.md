@@ -1,5 +1,8 @@
 ## Change Log
 
+### Upcoming
+- Don't hide underline when hide highlight enabled ([@richrace])
+
 ### v0.8.0 2014/08/24
 - Total rewrite to use decorations ([@richrace])
 - Use selection:changed to handle multiple cursors ([@richrace])
