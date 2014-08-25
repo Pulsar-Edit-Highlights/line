@@ -70,6 +70,17 @@ describe "DecorationExample", ->
             .find('.cursor-line.highlight-line-multi-line-solid-bottom'))
             .toHaveLength(1)
 
+        describe "when hide highlight on select is enabled", ->
+          beforeEach ->
+            atom.config.set('highlight-line.hideHighlightOnSelect', true)
+
+          it "will still have a line", ->
+            range = new Range(new Point(8, 2), new Point(8, 5))
+            editor.setSelectedBufferRange(range)
+            expect(atom.workspaceView
+              .find('.line.highlight-line-multi-line-solid-bottom'))
+              .toHaveLength(1)
+
       describe "when dashed settings has been set", ->
         beforeEach ->
           atom.config.set('highlight-line.underline.dashed', true)

@@ -67,11 +67,11 @@ class HighlightLineView extends View
   handleSingleLine: =>
     for selection in @getEditor().getSelections()
       if selection.isSingleScreenLine()
-        return if selection.getText() isnt '' and atom.config.get(
-          "highlight-line.hideHighlightOnSelect")
         selectionRange = selection.getBufferRange()
-        if atom.config.get('highlight-line.enableBackgroundColor')
-          @createDecoration(selectionRange)
+        unless selection.getText() isnt '' \
+        and atom.config.get("highlight-line.hideHighlightOnSelect")
+          if atom.config.get('highlight-line.enableBackgroundColor')
+            @createDecoration(selectionRange)
 
         if atom.config.get('highlight-line.enableUnderline') \
         and underlineStyleInUse
