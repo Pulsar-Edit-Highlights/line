@@ -1,6 +1,10 @@
 ## Change Log
 
-### Upcoming
+### v0.9.0 2014/09/04
+- Use new Event API ([@richrace])
+- Use new config settings ([@richrace])
+
+### v0.8.1 2014/08/31
 - Don't hide underline when hide highlight enabled ([@richrace])
 
 ### v0.8.0 2014/08/24
