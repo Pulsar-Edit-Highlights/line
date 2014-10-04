@@ -8,9 +8,7 @@
   "engines": {
     "atom": ">=0.135.0"
   },
-  "dependencies": {
-    "event-kit": "latest"
-  },
+  "dependencies": { },
   "devDependencies": {
     "coffee-script": "latest",
     "coffeelint": "latest",
