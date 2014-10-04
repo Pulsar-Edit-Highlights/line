@@ -1,4 +1,5 @@
 {View} = require 'atom'
+{CompositeDisposable} = require 'event-kit'
 
 lines = []
 
@@ -11,12 +12,14 @@ class HighlightLineView extends View
   attach: ->
     atom.workspaceView.prependToBottom(this)
 
-  initialize: ->
+  initialize: =>
+    @subscriptions = new CompositeDisposable
+
     atom.workspaceView.on 'selection:changed', @updateSelectedLine
-    atom.workspace.onDidChangeActivePaneItem @updateSelectedLine
+    @subscriptions.add(
+      atom.workspace.onDidChangeActivePaneItem(@updateSelectedLine))
 
     @markers = []
-
     @observeSettings()
     @updateSelectedLine()
 
@@ -26,7 +29,7 @@ class HighlightLineView extends View
   # Tear down any state and detach
   destroy: =>
     atom.workspaceView.off 'selection:changed', @updateSelectedLine
-    @unsubscribe()
+    @subscriptions.dispose()
     @remove()
     @detach()
 
@@ -89,19 +92,11 @@ class HighlightLineView extends View
     @markers.push marker
 
   observeSettings: =>
-    @subscribe atom.config.observe(
-      "highlight-line.enableBackgroundColor",
-      callNow: false,
-      @updateSelectedLine)
-    @subscribe atom.config.observe(
-      "highlight-line.hideHighlightOnSelect",
-      callNow: false,
-      @updateSelectedLine)
-    @subscribe atom.config.observe(
-      "highlight-line.enableUnderline",
-      callNow: false,
-      @updateSelectedLine)
-    @subscribe atom.config.observe(
-      "highlight-line.enableSelectionBorder",
-      callNow: false,
-      @updateSelectedLine)
+    @subscriptions.add atom.config.onDidChange(
+      "highlight-line.enableBackgroundColor", @updateSelectedLine)
+    @subscriptions.add atom.config.onDidChange(
+      "highlight-line.hideHighlightOnSelect", @updateSelectedLine)
+    @subscriptions.add atom.config.onDidChange(
+      "highlight-line.enableUnderline", @updateSelectedLine)
+    @subscriptions.add atom.config.onDidChange(
+      "highlight-line.enableSelectionBorder", @updateSelectedLine)
