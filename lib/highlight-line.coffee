@@ -1,15 +1,23 @@
 HighlightLineView = require './highlight-line-view'
 
 module.exports =
-  configDefaults:
-    enableBackgroundColor: true
-    hideHighlightOnSelect: false
-    enableUnderline: false
-    enableSelectionBorder: false
+  config:
+    enableBackgroundColor:
+      type: 'boolean'
+      default: true
+    hideHighlightOnSelect:
+      type: 'boolean'
+      default: false
+    enableUnderline:
+      type: 'boolean'
+      default: false
+    enableSelectionBorder:
+      type: 'boolean'
+      default: false
     underline:
-      solid: true
-      dotted: false
-      dashed: false
+      type: 'string'
+      default: 'solid'
+      enum: ['solid', 'dotted', 'dashed']
   line: null
 
   activate: ->

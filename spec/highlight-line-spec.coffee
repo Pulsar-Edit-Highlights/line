@@ -61,7 +61,7 @@ describe "DecorationExample", ->
 
       describe "when solid settings has been set", ->
         beforeEach ->
-          atom.config.set('highlight-line.underline.solid', true)
+          atom.config.set('highlight-line.underline', 'solid')
           range = new Range(new Point(8, 2), new Point(8, 2))
           editor.setSelectedBufferRange(range)
 
@@ -83,7 +83,7 @@ describe "DecorationExample", ->
 
       describe "when dashed settings has been set", ->
         beforeEach ->
-          atom.config.set('highlight-line.underline.dashed', true)
+          atom.config.set('highlight-line.underline', 'dashed')
           range = new Range(new Point(8, 2), new Point(8, 2))
           editor.setSelectedBufferRange(range)
 
@@ -94,7 +94,7 @@ describe "DecorationExample", ->
 
       describe "when dotted settings has been set", ->
         beforeEach ->
-          atom.config.set('highlight-line.underline.dotted', true)
+          atom.config.set('highlight-line.underline', 'dotted')
           range = new Range(new Point(8, 2), new Point(8, 2))
           editor.setSelectedBufferRange(range)
 
@@ -125,7 +125,7 @@ describe "DecorationExample", ->
       describe "when selection border is enabled", ->
         beforeEach ->
           atom.config.set('highlight-line.enableSelectionBorder', true)
-          atom.config.set('highlight-line.underline.solid', true)
+          atom.config.set('highlight-line.underline', 'solid')
           range = new Range(new Point(8, 2), new Point(10, 8))
           editor.setSelectedBufferRange(range)
 
