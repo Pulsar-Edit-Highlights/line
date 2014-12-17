@@ -1,5 +1,8 @@
 ## Change Log
 
+### Upcoming
+- Support for Shadow Dom ([@richrace])
+
 ### v0.9.0 2014/09/04
 - Use new Event API ([@richrace])
 - Use new config settings ([@richrace])
