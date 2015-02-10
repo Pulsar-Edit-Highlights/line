@@ -1,4 +1,4 @@
-{View} = require 'atom-space-pen-views'
+{View, $} = require 'atom-space-pen-views'
 {CompositeDisposable} = require 'event-kit'
 
 lines = []
@@ -10,25 +10,28 @@ class HighlightLineView extends View
     @div class: 'highlight-view hidden'
 
   attach: ->
-    atom.workspaceView.prependToBottom(this)
+    atom.workspace.addBottomPanel(
+        item: $( this )
+    )
 
   initialize: =>
     @subscriptions = new CompositeDisposable
 
-    atom.workspaceView.on 'selection:changed', @updateSelectedLine
+    @subscriptions.add( atom.workspace.observeTextEditors ( activeEditor ) =>
+        activeEditor.onDidChangeSelectionRange( @updateSelectedLine ) )
     @subscriptions.add(
-      atom.workspace.onDidChangeActivePaneItem(@updateSelectedLine))
+        atom.workspace.onDidChangeActivePaneItem( @updateSelectedLine ) )
 
     @markers = []
     @observeSettings()
     @updateSelectedLine()
 
   getEditor: ->
-    atom.workspace.getActiveEditor()
+    atom.workspace.getActiveTextEditor()
 
   # Tear down any state and detach
   destroy: =>
-    atom.workspaceView.off 'selection:changed', @updateSelectedLine
+    #atom.workspaceView.off 'selection:changed', @updateSelectedLine
     @subscriptions.dispose()
     @remove()
     @detach()
