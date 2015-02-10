@@ -11,16 +11,16 @@ class HighlightLineView extends View
 
   attach: ->
     atom.workspace.addBottomPanel(
-        item: $( this )
+      item: $( this )
     )
 
   initialize: =>
     @subscriptions = new CompositeDisposable
 
     @subscriptions.add( atom.workspace.observeTextEditors ( activeEditor ) =>
-        activeEditor.onDidChangeSelectionRange( @updateSelectedLine ) )
+      activeEditor.onDidChangeSelectionRange( @updateSelectedLine ) )
     @subscriptions.add(
-        atom.workspace.onDidChangeActivePaneItem( @updateSelectedLine ) )
+      atom.workspace.onDidChangeActivePaneItem( @updateSelectedLine ) )
 
     @markers = []
     @observeSettings()

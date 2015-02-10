@@ -32,8 +32,11 @@ module.exports =
     # Add the commands
     @subscriptions.add atom.commands.add "atom-workspace",
         'highlight-line:toggle-background': => @toggleHighlight()
+    @subscriptions.add atom.commands.add "atom-workspace",
         'highlight-line:toggle-hide-highlight-on-select': => @toggleHideHighlightOnSelect()
+    @subscriptions.add atom.commands.add "atom-workspace",
         'highlight-line:toggle-underline': => @toggleUnderline()
+    @subscriptions.add atom.commands.add "atom-workspace",
         'highlight-line:toggle-selection-borders': => @toggleSelectionBorders()
 
     # atom.workspaceView.command(
