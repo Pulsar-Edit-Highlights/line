@@ -1,3 +1,4 @@
+{CompositeDisposable} = require "atom"
 HighlightLineView = require './highlight-line-view'
 
 module.exports =
@@ -19,33 +20,53 @@ module.exports =
       default: 'solid'
       enum: ['solid', 'dotted', 'dashed']
   line: null
+  subscriptions: null
 
   activate: ->
     @line = new HighlightLineView()
     @line.attach()
 
-    atom.workspaceView.command(
-      'highlight-line:toggle-background', '.editor', =>
-        @toggleHighlight()
-    )
-    atom.workspaceView.command(
-      'highlight-line:toggle-hide-highlight-on-select', '.editor', =>
-        @toggleHideHighlightOnSelect()
-    )
-    atom.workspaceView.command(
-      'highlight-line:toggle-underline', '.editor', =>
-        @toggleUnderline()
-    )
-    atom.workspaceView.command(
-      'highlight-line:toggle-selection-borders', '.editor', =>
-        @toggleSelectionBorders()
-    )
+    # Setup to use the new composite disposables API for registering commands
+    @subscriptions = new CompositeDisposable
+
+    # Add the commands
+    @subscriptions.add atom.commands.add "atom-workspace",
+        'highlight-line:toggle-background': => @toggleHighlight()
+    @subscriptions.add atom.commands.add "atom-workspace",
+        'highlight-line:toggle-hide-highlight-on-select': \
+        => @toggleHideHighlightOnSelect()
+    @subscriptions.add atom.commands.add "atom-workspace",
+        'highlight-line:toggle-underline': => @toggleUnderline()
+    @subscriptions.add atom.commands.add "atom-workspace",
+        'highlight-line:toggle-selection-borders': => @toggleSelectionBorders()
+
+    # atom.workspaceView.command(
+    #   'highlight-line:toggle-background', '.editor', =>
+    #     @toggleHighlight()
+    # )
+    # atom.workspaceView.command(
+    #   'highlight-line:toggle-hide-highlight-on-select', '.editor', =>
+    #     @toggleHideHighlightOnSelect()
+    # )
+    # atom.workspaceView.command(
+    #   'highlight-line:toggle-underline', '.editor', =>
+    #     @toggleUnderline()
+    # )
+    # atom.workspaceView.command(
+    #   'highlight-line:toggle-selection-borders', '.editor', =>
+    #     @toggleSelectionBorders()
+    # )
 
   deactivate: ->
     @line.destroy()
-    atom.workspaceView.off 'highlight-line:toggle-background'
-    atom.workspaceView.off 'highlight-line:toggle-underline'
-    atom.workspaceView.off 'highlight-line:toggle-selection-borders'
+
+    # Destroy the subscriptions as well
+    @subscriptions.dispose()
+    @subscriptions = null
+
+    # atom.workspaceView.off 'highlight-line:toggle-background'
+    # atom.workspaceView.off 'highlight-line:toggle-underline'
+    # atom.workspaceView.off 'highlight-line:toggle-selection-borders'
 
   toggleHighlight: ->
     current = atom.config.get('highlight-line.enableBackgroundColor')
