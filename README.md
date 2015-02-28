@@ -38,7 +38,7 @@ I don't use the ```.cursor-line``` class as when you make selection on the
 same line, you then lose the highlight.
 
 ```scss
-.editor {
+atom-text-editor::shadow {
   // The cursor line important to use rgba for opacity, also requires !important
   // to override any theme.
   .line.highlight-line {
