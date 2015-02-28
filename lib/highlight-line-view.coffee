@@ -15,10 +15,13 @@ class HighlightLineView extends View
   initialize: =>
     @subscriptions = new CompositeDisposable
 
-    @subscriptions.add( atom.workspace.observeTextEditors ( activeEditor ) =>
-      activeEditor.onDidChangeSelectionRange( @updateSelectedLine ) )
+    @subscriptions.add(atom.workspace.observeTextEditors((activeEditor) =>
+      activeEditor.onDidAddSelection(@updateSelectedLine)
+      activeEditor.onDidChangeSelectionRange(@updateSelectedLine)
+    ))
     @subscriptions.add(
-      atom.workspace.onDidChangeActivePaneItem( @updateSelectedLine ) )
+      atom.workspace.onDidChangeActivePaneItem(@updateSelectedLine)
+    )
 
     @markers = []
     @observeSettings()
