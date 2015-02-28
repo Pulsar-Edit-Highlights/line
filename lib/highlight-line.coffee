@@ -40,33 +40,12 @@ module.exports =
     @subscriptions.add atom.commands.add "atom-workspace",
         'highlight-line:toggle-selection-borders': => @toggleSelectionBorders()
 
-    # atom.workspaceView.command(
-    #   'highlight-line:toggle-background', '.editor', =>
-    #     @toggleHighlight()
-    # )
-    # atom.workspaceView.command(
-    #   'highlight-line:toggle-hide-highlight-on-select', '.editor', =>
-    #     @toggleHideHighlightOnSelect()
-    # )
-    # atom.workspaceView.command(
-    #   'highlight-line:toggle-underline', '.editor', =>
-    #     @toggleUnderline()
-    # )
-    # atom.workspaceView.command(
-    #   'highlight-line:toggle-selection-borders', '.editor', =>
-    #     @toggleSelectionBorders()
-    # )
-
   deactivate: ->
     @line.destroy()
 
     # Destroy the subscriptions as well
     @subscriptions.dispose()
     @subscriptions = null
-
-    # atom.workspaceView.off 'highlight-line:toggle-background'
-    # atom.workspaceView.off 'highlight-line:toggle-underline'
-    # atom.workspaceView.off 'highlight-line:toggle-selection-borders'
 
   toggleHighlight: ->
     current = atom.config.get('highlight-line.enableBackgroundColor')
