@@ -10,9 +10,7 @@ class HighlightLineView extends View
     @div class: 'highlight-view hidden'
 
   attach: ->
-    atom.workspace.addBottomPanel(
-      item: $( this )
-    )
+    atom.workspace.addBottomPanel(item: this)
 
   initialize: =>
     @subscriptions = new CompositeDisposable
@@ -31,7 +29,6 @@ class HighlightLineView extends View
 
   # Tear down any state and detach
   destroy: =>
-    #atom.workspaceView.off 'selection:changed', @updateSelectedLine
     @subscriptions.dispose()
     @remove()
     @detach()
