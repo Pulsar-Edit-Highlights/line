@@ -10,7 +10,8 @@ class HighlightLineView extends View
     @div class: 'highlight-view hidden'
 
   attach: ->
-    atom.workspace.addBottomPanel(item: this)
+    panel = atom.workspace.addBottomPanel(item: this)
+    panel.hide()
 
   initialize: =>
     @subscriptions = new CompositeDisposable
