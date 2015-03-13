@@ -32,7 +32,7 @@ opacity in the settings.
 # Customisation
 
 You can update the colours by either updating the ```line-colors.less``` file
-once you've installed the package. Or by adding the following to your ```syle.less```
+once you've installed the package. Or by adding the following to your ```style.less```
 
 I don't use the ```.cursor-line``` class as when you make selection on the
 same line, you then lose the highlight.
