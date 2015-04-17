@@ -1,5 +1,5 @@
 {View} = require 'atom-space-pen-views'
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable} = require 'atom'
 
 lines = []
 

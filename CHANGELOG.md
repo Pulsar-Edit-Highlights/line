@@ -1,5 +1,8 @@
 ## Change Log
 
+### v0.10.2 2015/04/17
+- Fix activating package. ([@richrace] #[66])
+
 ### v0.10.1 2015/03/01
 - Fix 1px border above the status bar. ([@richrace] #[62])
 
@@ -142,3 +145,4 @@
 [@sniperbat]: https://github.com/sniperbat
 [@skulled]: https://github.com/skulled
 [62]: https://github.com/richrace/highlight-line/issues/62
+[66]: https://github.com/richrace/highlight-line/issues/62
