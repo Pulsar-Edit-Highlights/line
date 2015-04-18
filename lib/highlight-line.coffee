@@ -1,5 +1,5 @@
 {CompositeDisposable} = require "atom"
-HighlightLineView = require './highlight-line-view'
+HighlightLineModel = require './highlight-line-model'
 
 module.exports =
   config:
@@ -23,8 +23,7 @@ module.exports =
   subscriptions: null
 
   activate: ->
-    @line = new HighlightLineView()
-    @line.attach()
+    @line = new HighlightLineModel()
 
     # Setup to use the new composite disposables API for registering commands
     @subscriptions = new CompositeDisposable
