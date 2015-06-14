@@ -1,5 +1,8 @@
 ## Change Log
 
+### v0.11.0 2015/04/18
+- Remove Space Pen View dependency and no longer add to the DOM. ([@richrace])
+
 ### v0.10.2 2015/04/17
 - Fix activating package. ([@richrace] #[66])
 
