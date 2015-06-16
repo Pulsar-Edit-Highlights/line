@@ -1,15 +1,12 @@
 {
   "name": "highlight-line",
   "main": "./lib/highlight-line",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "Highlights the current line in the editor",
   "repository": "https://github.com/richrace/highlight-line",
   "license": "MIT",
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
-  },
-  "dependencies": {
-    "atom-space-pen-views": "^2.0.3"
   },
   "devDependencies": {
     "coffee-script": "1.9.0",

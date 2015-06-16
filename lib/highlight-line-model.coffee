@@ -1,20 +1,12 @@
-{View} = require 'atom-space-pen-views'
 {CompositeDisposable} = require 'atom'
 {Point} = require 'atom'
 
 lines = []
 
 module.exports =
-class HighlightLineView extends View
+class HighlightLineView
 
-  @content: ->
-    @div class: 'highlight-view hidden'
-
-  attach: ->
-    panel = atom.workspace.addBottomPanel(item: this)
-    panel.hide()
-
-  initialize: =>
+  constructor: ->
     @subscriptions = new CompositeDisposable
 
     @subscriptions.add(atom.workspace.observeTextEditors((activeEditor) =>
@@ -35,8 +27,6 @@ class HighlightLineView extends View
   # Tear down any state and detach
   destroy: =>
     @subscriptions.dispose()
-    @remove()
-    @detach()
 
   updateSelectedLine: =>
     @resetBackground()

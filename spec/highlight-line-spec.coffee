@@ -26,9 +26,9 @@ describe "Higlight line", ->
       activationPromise
 
   describe "when the view is loaded", ->
-    it "attaches the view", ->
+    it "does not attach to the view", ->
       expect(workspaceElement.querySelectorAll('.highlight-view'))
-        .toHaveLength(1)
+        .toHaveLength(0)
 
   describe "when the background color is enabled", ->
     beforeEach ->
