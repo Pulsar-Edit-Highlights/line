@@ -1,5 +1,8 @@
 ## Change Log
 
+### v0.11.1 2016/02/02
+- Fix `cmd + l` empty line selection ([@shemerey])
+
 ### v0.11.0 2015/04/18
 - Remove Space Pen View dependency and no longer add to the DOM. ([@richrace])
 
@@ -147,5 +150,6 @@
 [@kelp404]: https://github.com/kelp404
 [@sniperbat]: https://github.com/sniperbat
 [@skulled]: https://github.com/skulled
+[@shemerey]: https://github.com/shemerey
 [62]: https://github.com/richrace/highlight-line/issues/62
 [66]: https://github.com/richrace/highlight-line/issues/62
