@@ -1,4 +1,5 @@
 {CompositeDisposable} = require 'atom'
+{Point} = require 'atom'
 
 lines = []
 
@@ -67,7 +68,8 @@ class HighlightLineView
         bottomLine = selectionRange.copy()
 
         topLine.end = topLine.start
-        bottomLine.start = bottomLine.end
+        bottomLine.start = new Point(bottomLine.end.row - 1,
+                                     bottomLine.end.column)
 
         style = atom.config.get "highlight-line.underline"
 
