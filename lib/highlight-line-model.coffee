@@ -12,6 +12,7 @@ class HighlightLineView
     @subscriptions.add(atom.workspace.observeTextEditors((activeEditor) =>
       activeEditor.onDidAddSelection(@updateSelectedLine)
       activeEditor.onDidChangeSelectionRange(@updateSelectedLine)
+      activeEditor.onDidRemoveSelection(@updateSelectedLine)
     ))
     @subscriptions.add(
       atom.workspace.onDidChangeActivePaneItem(@updateSelectedLine)
