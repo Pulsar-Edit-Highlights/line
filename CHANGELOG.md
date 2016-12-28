@@ -1,5 +1,8 @@
 ## Change Log
 
+### v0.12.0 2016/12/28
+- Only support Atom 1.13 selectors ([@richrace])
+
 ### v0.11.2 2016/12/28
 - Update selected line when consolidating selections ([@itiut])
 
