@@ -40,8 +40,8 @@ describe "Higlight line", ->
         editor.setSelectedBufferRange(range)
 
       it "adds the background class to the cursor line", ->
-        expect(editorElement.shadowRoot
-          .querySelectorAll('.cursor-line.highlight-line')
+        expect(
+          editorElement.querySelectorAll('.cursor-line.highlight-line')
         ).toHaveLength(1)
 
       describe "when hide highlight on select is enabled", ->
@@ -49,14 +49,14 @@ describe "Higlight line", ->
           atom.config.set('highlight-line.hideHighlightOnSelect', true)
 
         it "will have a highlight when there is no text selected", ->
-          expect(editorElement.shadowRoot
+          expect(editorElement
             .querySelectorAll('.cursor-line.highlight-line')
           ).toHaveLength(1)
 
         it "won`t have a highlight when there is text selected", ->
           range = new Range(new Point(8, 2), new Point(8, 5))
           editor.setSelectedBufferRange(range)
-          expect(editorElement.shadowRoot
+          expect(editorElement
             .querySelectorAll('.cursor-line.highlight-line')
           ).toHaveLength(0)
 
@@ -72,7 +72,7 @@ describe "Higlight line", ->
 
         it "adds an underline to the current line", ->
           expect(
-            editorElement.shadowRoot.querySelectorAll(
+            editorElement.querySelectorAll(
               '.cursor-line.highlight-line-multi-line-solid-bottom'
             )
           ).toHaveLength(1)
@@ -85,7 +85,7 @@ describe "Higlight line", ->
             range = new Range(new Point(8, 2), new Point(8, 5))
             editor.setSelectedBufferRange(range)
             expect(
-              editorElement.shadowRoot.querySelectorAll(
+              editorElement.querySelectorAll(
                 '.line.highlight-line-multi-line-solid-bottom'
               )
             ).toHaveLength(1)
@@ -98,7 +98,7 @@ describe "Higlight line", ->
 
         it "adds an underline to the current line", ->
           expect(
-            editorElement.shadowRoot.querySelectorAll(
+            editorElement.querySelectorAll(
               '.cursor-line.highlight-line-multi-line-dashed-bottom'
             )
           ).toHaveLength(1)
@@ -111,7 +111,7 @@ describe "Higlight line", ->
 
         it "adds an underline to the current line", ->
           expect(
-            editorElement.shadowRoot.querySelectorAll(
+            editorElement.querySelectorAll(
               '.cursor-line.highlight-line-multi-line-dotted-bottom'
             )
           ).toHaveLength(1)
@@ -123,8 +123,8 @@ describe "Higlight line", ->
         editor.setSelectedBufferRanges([range1, range2])
 
       it 'adds the background class to the cursor line', ->
-        expect(editorElement.shadowRoot
-          .querySelectorAll('.cursor-line.highlight-line')
+        expect(
+          editorElement.querySelectorAll('.cursor-line.highlight-line')
         ).toHaveLength(2)
 
     describe "when there is a multi row selection", ->
@@ -133,8 +133,8 @@ describe "Higlight line", ->
         editor.setSelectedBufferRange(range)
 
       it "won`t add a highlight line class", ->
-        expect(editorElement.shadowRoot
-          .querySelectorAll('.cursor-line.highlight-line')
+        expect(
+          editorElement.querySelectorAll('.cursor-line.highlight-line')
         ).toHaveLength(0)
 
       describe "when selection border is enabled", ->
@@ -145,7 +145,7 @@ describe "Higlight line", ->
           editor.setSelectedBufferRange(range)
 
         it "will add highlights to the top and bottom", ->
-          expect(editorElement.shadowRoot.querySelectorAll('.cursor-line
+          expect(editorElement.querySelectorAll('.cursor-line
             .highlight-line-multi-line-solid-top
             .highlight-line-multi-line-solid-bottom'))
             .toHaveLength(0)
