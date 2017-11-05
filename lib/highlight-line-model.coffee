@@ -69,8 +69,9 @@ class HighlightLineView
         bottomLine = selectionRange.copy()
 
         topLine.end = topLine.start
-        bottomLine.start = new Point(bottomLine.end.row - 1,
-                                     bottomLine.end.column)
+        bottomLine.start = bottomLine.end
+        if bottomLine.start.column == 0
+          bottomLine.start.row -= 1
 
         style = atom.config.get "highlight-line.underline"
 
