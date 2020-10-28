@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+/spec export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/.eslintrc.json export-ignore
+/.prettierrc export-ignore
+/CONTRIBUTING.md export-ignore
+/package-lock.json export-ignore
