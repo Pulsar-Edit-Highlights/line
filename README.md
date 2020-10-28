@@ -1,6 +1,10 @@
-[![Build Status](https://travis-ci.org/richrace/highlight-line.svg?branch=master)](https://travis-ci.org/richrace/highlight-line)
-
 # Highlight Line Package
+
+[![Version](https://img.shields.io/apm/v/highlight-line.svg?style=flat-square)](https://atom.io/packages/highlight-line)
+[![Github Actions CI](https://img.shields.io/github/workflow/status/richrace/highlight-line/CI.svg?style=flat-square)](https://github.com/richrace/highlight-line/actions?query=workflow%3ACI)
+[![Downloads](https://img.shields.io/apm/dm/highlight-line.svg?style=flat-square)](https://atom.io/packages/highlight-line)
+[![Licence](https://img.shields.io/apm/l/highlight-line.svg?style=flat-square)](https://atom.io/packages/highlight-line)
+[![David](https://img.shields.io/david/richrace/highlight-line.svg?style=flat-square)](https://david-dm.org/richrace/highlight-line)
 
 Highlights the current line in the editor; really simple.
 
@@ -12,18 +16,17 @@ you can edit the colour and type of line.
 
 ![screenshot](http://i.imgur.com/lIYBxQX.png)
 
-
 When selecting more than one line of text, you can enable selection borders at
 the top and bottom of the selections. This isn't enabled by default.
 Courtesy of [@djak250](https://github.com/djak250)
 
 ![screenshot](http://i.imgur.com/G1b8eAJ.png)
 
-You can now toggle the highlighted line by:  ```cmd+alt+H```
-You can now toggle the hiding the highlight on selecting text by:  ```cmd+shift+alt+H```
+You can now toggle the highlighted line by: `cmd+alt+H`
+You can now toggle the hiding the highlight on selecting text by: `cmd+shift+alt+H`
 
-You can now toggle the underline by:  ```cmd+alt+U```
-You can now toggle the selection borders by:  ```cmd+shift+alt+U```
+You can now toggle the underline by: `cmd+alt+U`
+You can now toggle the selection borders by: `cmd+shift+alt+U`
 
 I've moved this package to use the new decorations API and as such we can no
 longer set arbitrary style on the lines. So, this means no more entering colours/
@@ -31,10 +34,10 @@ opacity in the settings.
 
 # Customisation
 
-You can update the colours by either updating the ```line-colors.less``` file
-once you've installed the package. Or by adding the following to your ```style.less```
+You can update the colours by either updating the `line-colors.less` file
+once you've installed the package. Or by adding the following to your `style.less`
 
-I don't use the ```.cursor-line``` class as when you make selection on the
+I don't use the `.cursor-line` class as when you make selection on the
 same line, you then lose the highlight.
 
 ```scss
@@ -60,4 +63,4 @@ atom-text-editor::shadow {
 }
 ```
 
-To remove unused settings delete them from your ```config.cson```.
+To remove unused settings delete them from your `config.cson`.
