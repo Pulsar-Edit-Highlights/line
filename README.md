@@ -1,3 +1,7 @@
+<hr>
+<p><strong>This project is in search of a new contributor/maintainer as the author is no longer using Atom.</strong></p>
+<hr>
+
 # Highlight Line Package
 
 [![Version](https://img.shields.io/apm/v/highlight-line.svg?style=flat-square)](https://atom.io/packages/highlight-line)
