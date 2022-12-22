@@ -15,11 +15,11 @@
     "scripts" : {
         "check" : "npm run lint && npm run test" ,
         "lint" : "./node_modules/.bin/eslint lib spec" ,
-        "test" : "atom --test spec"
+        "test" : "pulsar --test spec"
     },
 
     "engines" : {
-        "atom" : ">=1.13.0 <2.0.0"
+        "pulsar" : ">=1.63.0 <2.0.0"
     },
 
     "devDependencies" : {
