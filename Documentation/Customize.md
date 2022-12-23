@@ -1,33 +1,48 @@
 
-# Customisation
+# Customization
 
-You can update the colours by either updating the `line-colors.less` file
-once you've installed the package. Or by adding the following to your `style.less`
+Colors can be set by modifying the  
+`line-colors.less`  file or adding  
+to your  `style.less`  sheet.
 
-I don't use the `.cursor-line` class as when you make selection on the
-same line, you then lose the highlight.
+<br>
+
+*Using the  `.cursor-line`  class selector is not recommended as  
+you will loose highlighting when selecting text on the current line.*
+
+<br>
 
 ```scss
 atom-text-editor::shadow {
-  // The cursor line important to use rgba for opacity, also requires !important
-  // to override any theme.
-  .line.highlight-line {
-    background: rgba(255, 0, 0, 0.3) !important;
-  }
+    
+    /*
+     *  Ｂａｃｋｇｒｏｕｎｄ
+     *  Uses !important to override theme specific settings
+     */
+    
+    .line.highlight-line {
+        background : rgba( 255 , 0 , 0 , 0.3 ) !important ;
+    }
 
-  // Replace 'solid', with 'dashed' or 'dotted' depending of what you have
-  // set in the settings page.
+    /*
+     *  Ｕｎｄｅｒｌｉｎｅ
+     *  Replace `solid` with `dashed` or `dotted` depending
+     *  on the style you selected in the settings.
+     */
+    
+    .line.highlight-line-multi-line-solid-bottom {
+        border-bottom-color : red ;
+    }
 
-  // This is for the bottom line (underline)
-  .line.highlight-line-multi-line-solid-bottom {
-    border-bottom-color: red;
-  }
-
-  // This is for the top line when you have the selection borders enabled.
-  .line.highlight-line-multi-line-solid-top {
-    border-top-color: red;
-  }
+    /*
+     *  Ｂｏｒｄｅｒｓ
+     *  Style for the optional area selection borders.
+     */
+    
+    .line.highlight-line-multi-line-solid-top {
+        border-top-color : red ;
+    }
 }
 ```
 
-To remove unused settings delete them from your `config.cson`.
+<br>
