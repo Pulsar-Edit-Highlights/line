@@ -1,9 +1,8 @@
 
 # Customization
 
-Colors can be set by modifying the  
-`line-colors.less`  file or adding  
-to your  `style.less`  sheet.
+Colors can be set by modifying the  `line-colors.less`  
+stylesheet or by adding to your  `style.less`  file.
 
 <br>
 
