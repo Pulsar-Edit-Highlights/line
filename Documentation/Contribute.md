@@ -1,17 +1,16 @@
+
 # Contributing
 
-If you're going to report an issue or submit a pull request, please follow these guidelines.
+Before you open a pull request, make sure to have all tests pass.
 
-## Reporting an Issue
+<br>
 
-Provide the following information:
+## Running Tests
 
-- Version of Atom (`atom --version`)
-- Version of highlight-line (`apm list | grep highlight-line`)
-- Backtrace
+Tests can be run with:
 
-## Pull Requests
+```sh
+npm run check
+```
 
-Run `npm run check` before submit.
-
-This will run ESlint and Tests.
+<br>

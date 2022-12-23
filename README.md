@@ -34,6 +34,8 @@
 
 ## Features
 
+<br>
+
 You can enable underlining of the current  
 line, as well as adjust it's color and style.
 
