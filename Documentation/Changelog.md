@@ -1,10 +1,10 @@
 
-[<img height = 9600 width = 30% align = left  src = '../Resources/Space.svg' >][#]
-[<img height = 9600 width = 30% align = right src = '../Resources/Space.svg' >][#]
+[<img height = 1800 width = 24% align = left  src = '../Resources/Space.svg' >][#]
+[<img height = 1800 width = 24% align = right src = '../Resources/Space.svg' >][#]
 
 <div align = left>
 
-# Change Log
+# Changelog
 
 *If not otherwise specified, commit are by **[@richrace]**.*
 
@@ -84,6 +84,13 @@
 -   Fixed deprecations
 
 <br>
+    
+</div>
+
+[<img height = 2000 width = 24% align = left  src = '../Resources/Space.svg' >][#]
+[<img height = 2000 width = 24% align = right src = '../Resources/Space.svg' >][#]
+
+<div align = left>
 
 ## 0.9.3
 
@@ -177,6 +184,13 @@
 
 <br>
 
+</div>
+
+[<img height = 1900 width = 24% align = left  src = '../Resources/Space.svg' >][#]
+[<img height = 1900 width = 24% align = right src = '../Resources/Space.svg' >][#]
+
+<div align = left>
+    
 ## 0.7.2
 
 `2014 / 06 / 21`
@@ -260,6 +274,13 @@
 -   Handles opacity percentages better
 
 <br>
+    
+</div>
+
+[<img height = 1900 width = 24% align = left  src = '../Resources/Space.svg' >][#]
+[<img height = 1900 width = 24% align = right src = '../Resources/Space.svg' >][#]
+
+<div align = left>
 
 ## 0.5.4
 
@@ -348,6 +369,13 @@
 
 <br>
 
+</div>
+
+[<img height = 2000 width = 24% align = left  src = '../Resources/Space.svg' >][#]
+[<img height = 2000 width = 24% align = right src = '../Resources/Space.svg' >][#]
+
+<div align = left>
+    
 ## 0.4.0
 
 `2014 / 03 / 12`
