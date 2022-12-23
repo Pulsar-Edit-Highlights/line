@@ -1,4 +1,9 @@
 
+[<img height = 9600 width = 30% align = left  src = '../Resources/Space.svg' >][#]
+[<img height = 9600 width = 30% align = right src = '../Resources/Space.svg' >][#]
+
+<div align = left>
+
 # Change Log
 
 *If not otherwise specified, commit are by **[@richrace]**.*
@@ -423,6 +428,8 @@
 
 -   Prepared release
 
+</div>
+
 <br>
 
 
@@ -436,3 +443,5 @@
 [@kelp404]: https://github.com/kelp404
 [@skulled]: https://github.com/skulled
 [@itiut]: https://github.com/itiut
+
+[#]: #
