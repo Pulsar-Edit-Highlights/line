@@ -1,4 +1,12 @@
+
+
 .DS_Store
+
 npm-debug.log
+
+
+#   NPM Module Cache
+
 node_modules
+
 tmp

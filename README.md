@@ -1,70 +1,103 @@
-<hr>
-<p><strong>This project is in search of a new contributor/maintainer as the author is no longer using Atom.</strong></p>
-<hr>
 
-# Highlight Line Package
+<br>
 
-[![Version](https://img.shields.io/apm/v/highlight-line.svg?style=flat-square)](https://atom.io/packages/highlight-line)
-[![Github Actions CI](https://img.shields.io/github/workflow/status/richrace/highlight-line/CI.svg?style=flat-square)](https://github.com/richrace/highlight-line/actions?query=workflow%3ACI)
-[![Downloads](https://img.shields.io/apm/dm/highlight-line.svg?style=flat-square)](https://atom.io/packages/highlight-line)
-[![Licence](https://img.shields.io/apm/l/highlight-line.svg?style=flat-square)](https://atom.io/packages/highlight-line)
-[![David](https://img.shields.io/david/richrace/highlight-line.svg?style=flat-square)](https://david-dm.org/richrace/highlight-line)
+<div align = center>
 
-Highlights the current line in the editor; really simple.
+[![Badge Version]][Releases]  
+[![Badge CI]][Actions]  
+[![Badge License]][License]
 
-![screenshot](http://i.imgur.com/fa32Wtr.png)
+<br>
+<br>
 
-You can now also underline the the current lines thanks to
-[@sniperbat](https://github.com/sniperbat). This isn't enabled by default, and
-you can edit the colour and type of line.
+# Highlight Line
 
-![screenshot](http://i.imgur.com/lIYBxQX.png)
+*Pulsar package that highlights the*  
+*currently selected area of your editor.*
 
-When selecting more than one line of text, you can enable selection borders at
-the top and bottom of the selections. This isn't enabled by default.
-Courtesy of [@djak250](https://github.com/djak250)
+<br>
+<br>
 
-![screenshot](http://i.imgur.com/G1b8eAJ.png)
+[![Button Customize]][Customize]  
+[![Button KeyBindings]][KeyBindings]
 
-You can now toggle the highlighted line by: `cmd+alt+H`
-You can now toggle the hiding the highlight on selecting text by: `cmd+shift+alt+H`
+[![Button Contribute]][Contribute]  
+[![Button Changelog]][Changelog]
 
-You can now toggle the underline by: `cmd+alt+U`
-You can now toggle the selection borders by: `cmd+shift+alt+U`
+<br>
+<br>
 
-I've moved this package to use the new decorations API and as such we can no
-longer set arbitrary style on the lines. So, this means no more entering colours/
-opacity in the settings.
+[![Image Showcase]][#]
 
-# Customisation
+<br>
+<br>
 
-You can update the colours by either updating the `line-colors.less` file
-once you've installed the package. Or by adding the following to your `style.less`
+## Features
 
-I don't use the `.cursor-line` class as when you make selection on the
-same line, you then lose the highlight.
+<br>
 
-```scss
-atom-text-editor::shadow {
-  // The cursor line important to use rgba for opacity, also requires !important
-  // to override any theme.
-  .line.highlight-line {
-    background: rgba(255, 0, 0, 0.3) !important;
-  }
+You can enable underlining of the current  
+line, as well as adjust it's color and style.
 
-  // Replace 'solid', with 'dashed' or 'dotted' depending of what you have
-  // set in the settings page.
+[![Image Underline]][#]
 
-  // This is for the bottom line (underline)
-  .line.highlight-line-multi-line-solid-bottom {
-    border-bottom-color: red;
-  }
+<br>
+<br>
 
-  // This is for the top line when you have the selection borders enabled.
-  .line.highlight-line-multi-line-solid-top {
-    border-top-color: red;
-  }
-}
-```
+You can enable borders for multi-line selection.
 
-To remove unused settings delete them from your `config.cson`.
+[![Image Selection]][#]
+
+</div>
+
+<br>
+<br>
+
+## Thanks To
+
+<br>
+
+-   **[@sniperbat]**
+
+    *For the underline feature.*
+
+-   **[@djak250]**
+
+    *For the selection border feature.*
+
+<br>
+
+<!----------------------------------------------------------------------------->
+
+[Releases]: https://github.com/richrace/highlight-line/releases
+[Package]: https://web.pulsar-edit.dev/packages/highlight-line
+[Actions]: https://github.com/richrace/highlight-line/actions
+
+[@sniperbat]: https://github.com/sniperbat
+[@djak250]: https://github.com/djak250
+
+[Image Selection]: Resources/Screenshots/Selection.png
+[Image Underline]: Resources/Screenshots/Underline.png
+[Image Showcase]: Resources/Screenshots/Showcase.png
+[KeyBindings]: Documentation/KeyBindings.md
+[Contribute]: Documentation/Contribute.md
+[Changelog]: Documentation/Changelog.md
+[Customize]: Documentation/Customize.md
+[License]: LICENSE
+
+[#]: #
+
+
+<!---------------------------------[ Badges ]---------------------------------->
+
+[Badge License]: https://img.shields.io/badge/License-MIT-ac8b11.svg?style=for-the-badge&labelColor=yellow&logo=GitBook&logoColor=white
+[Badge Version]: https://img.shields.io/github/package-json/v/richrace/highlight-line?style=for-the-badge&logo=BookStack&logoColor=white&labelColor=609926&color=4e7a1e
+[Badge CI]: https://img.shields.io/github/actions/workflow/status/richrace/highlight-line/ci.yml?style=for-the-badge&logo=GitHubActions&logoColor=white&color=582c6d&labelColor=73398D
+
+
+<!---------------------------------[ Buttons ]--------------------------------->
+
+[Button KeyBindings]: https://img.shields.io/badge/KeyBindings-3499CD?style=for-the-badge&logoColor=white&logo=AppleArcade
+[Button Contribute]: https://img.shields.io/badge/Contribute-7952B3?style=for-the-badge&logoColor=white&logo=GitHub
+[Button Changelog]: https://img.shields.io/badge/Changelog-37814A?style=for-the-badge&logoColor=white&logo=GitLFS
+[Button Customize]: https://img.shields.io/badge/Customize-00979D?style=for-the-badge&logoColor=white&logo=Rainmeter
