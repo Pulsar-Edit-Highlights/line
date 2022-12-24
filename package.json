@@ -1,13 +1,13 @@
 {
     "description" : "Highlights the current line in your editor" ,
-    "repository" : "https://github.com/richrace/highlight-line" ,
-    "homepage" : "https://github.com/richrace/highlight-line" ,
+    "repository" : "https://github.com/Pulsar-Edit-Highlights/line" ,
+    "homepage" : "https://github.com/Pulsar-Edit-Highlights/line" ,
     "version" : "1.0.0" ,
     "license" : "MIT" ,
     "name" : "highlight-line" ,
 
     "bugs" : {
-        "url" : "https://github.com/richrace/highlight-line/issues"
+        "url" : "https://github.com/Pulsar-Edit-Highlights/line/issues"
     },
 
     "main" : "./Source/App" ,

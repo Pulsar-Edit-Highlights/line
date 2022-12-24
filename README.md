@@ -70,9 +70,9 @@ You can enable borders for multi-line selection.
 
 <!----------------------------------------------------------------------------->
 
-[Releases]: https://github.com/richrace/highlight-line/releases
+[Releases]: https://github.com/Pulsar-Edit-Highlights/line/releases
 [Package]: https://web.pulsar-edit.dev/packages/highlight-line
-[Actions]: https://github.com/richrace/highlight-line/actions
+[Actions]: https://github.com/Pulsar-Edit-Highlights/line/actions
 
 [@sniperbat]: https://github.com/sniperbat
 [@djak250]: https://github.com/djak250
@@ -92,8 +92,8 @@ You can enable borders for multi-line selection.
 <!---------------------------------[ Badges ]---------------------------------->
 
 [Badge License]: https://img.shields.io/badge/License-MIT-ac8b11.svg?style=for-the-badge&labelColor=yellow&logo=GitBook&logoColor=white
-[Badge Version]: https://img.shields.io/github/package-json/v/richrace/highlight-line?style=for-the-badge&logo=BookStack&logoColor=white&labelColor=609926&color=4e7a1e
-[Badge CI]: https://img.shields.io/github/actions/workflow/status/richrace/highlight-line/ci.yml?style=for-the-badge&logo=GitHubActions&logoColor=white&color=582c6d&labelColor=73398D
+[Badge Version]: https://img.shields.io/github/package-json/v/Pulsar-Edit-Highlights/line?style=for-the-badge&logo=BookStack&logoColor=white&labelColor=609926&color=4e7a1e
+[Badge CI]: https://img.shields.io/github/actions/workflow/status/Pulsar-Edit-Highlights/line/ci.yml?style=for-the-badge&logo=GitHubActions&logoColor=white&color=582c6d&labelColor=73398D
 
 
 <!---------------------------------[ Buttons ]--------------------------------->
