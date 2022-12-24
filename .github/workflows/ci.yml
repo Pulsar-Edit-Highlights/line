@@ -1,13 +1,17 @@
 
 name: CI
 
-on:
-    pull_request:
+#   Disabled as long as the GitHub Action
+#   is not available / ppm is not properly
+#   installed.
+# 
+# on:
+#     pull_request:
 
-    push:
-        branches:
+#     push:
+#         branches:
 
-            -   main
+#             -   main
 
 jobs:
 
