@@ -13,22 +13,10 @@
     "main" : "./lib/highlight-line" ,
 
     "scripts" : {
-        "check" : "npm run lint && npm run test" ,
-        "lint" : "./node_modules/.bin/eslint lib spec" ,
-        "test" : "atom --test spec"
+        "test" : "pulsar --test spec"
     },
 
     "engines" : {
-        "atom" : ">=1.13.0 <2.0.0"
-    },
-
-    "devDependencies" : {
-        "eslint-config-airbnb-base" : "^14.2.0" ,
-        "eslint-config-prettier" : "^6.15.0" ,
-        "eslint-plugin-prettier" : "^3.0.1" ,
-        "eslint-plugin-import" : "^2.22.1" ,
-        "babel-eslint" : "^10.0.1" ,
-        "prettier" : "^2.1.2" ,
-        "eslint" : "^7.2.0"
+        "pulsar" : ">=1.63.0 <2.0.0"
     }
 }
