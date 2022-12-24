@@ -5,7 +5,7 @@
 
         "submenu" : [{
 
-            "label" : "Highlight Line",
+            "label" : "Highlight Line" ,
 
             "submenu" : [{
                 "command" : "highlight-line:toggle-background" ,

@@ -1,45 +1,39 @@
 
 const { CompositeDisposable } = require('atom');
 const { workspace , config } = atom;
+const { marker } = require('./Selection');
+
+const activeEditor = () =>
+    workspace.getActiveTextEditor();
 
 
 module.exports = class HighlightLineView {
 
+    subscriptions = new CompositeDisposable;
     markers = [];
+
 
     constructor (){
 
-        this.updateSelectedLine = this.updateSelectedLine.bind(this);
-        this.handleSingleLine = this.handleSingleLine.bind(this);
-        this.createDecoration = this.createDecoration.bind(this);
-        this.handleMultiLine = this.handleMultiLine.bind(this);
-        this.observeSettings = this.observeSettings.bind(this);
-        this.showHighlight = this.showHighlight.bind(this);
-        this.destroy = this.destroy.bind(this);
+        const update = () =>
+            this.updateSelectedLine();
 
 
-        this.subscriptions = new CompositeDisposable;
-
-
-        const { updateSelectedLine , subscriptions } = this;
+        const { subscriptions } = this;
 
         subscriptions.add(
             workspace.observeTextEditors((editor) => {
-                editor.onDidAddSelection(updateSelectedLine);
-                editor.onDidChangeSelectionRange(updateSelectedLine);
-                return editor.onDidRemoveSelection(updateSelectedLine);
+                editor.onDidChangeSelectionRange(update);
+                editor.onDidRemoveSelection(update);
+                editor.onDidAddSelection(update);
             }));
 
         subscriptions.add(
-            workspace.onDidChangeActivePaneItem(updateSelectedLine));
+            workspace.onDidChangeActivePaneItem(update));
+
 
         this.observeSettings();
         this.updateSelectedLine();
-    }
-
-
-    static getEditor (){
-        return workspace.getActiveTextEditor();
     }
 
 
@@ -66,7 +60,7 @@ module.exports = class HighlightLineView {
 
     showHighlight (){
 
-        if( ! HighlightLineView.getEditor() )
+        if( ! activeEditor() )
             return;
 
         this.handleMultiLine();
@@ -76,8 +70,7 @@ module.exports = class HighlightLineView {
 
     handleSingleLine (){
 
-        const selections = HighlightLineView
-            .getEditor()
+        const selections = activeEditor()
             .getSelections();
 
         for ( const selection of selections ){
@@ -90,11 +83,11 @@ module.exports = class HighlightLineView {
 
             if(selection.getText() === '' || ! config.get('highlight-line.hideHighlightOnSelect'))
                 if(config.get('highlight-line.enableBackgroundColor'))
-                    this.createDecoration(selectionRange);
+                    this.markers.push(marker(selectionRange));
 
             if(config.get('highlight-line.enableUnderline')){
                 const style = config.get('highlight-line.underline');
-                this.createDecoration(selectionRange, `-multi-line-${style}-bottom`);
+                this.markers.push(marker(selectionRange,`-multi-line-${style}-bottom`));
             }
         }
     }
@@ -105,8 +98,7 @@ module.exports = class HighlightLineView {
         if( ! config.get('highlight-line.enableSelectionBorder') )
             return;
 
-        const selections = HighlightLineView
-            .getEditor()
+        const selections = activeEditor()
             .getSelections();
 
         for ( const selection of selections ){
@@ -130,32 +122,34 @@ module.exports = class HighlightLineView {
             const style = config
                 .get('highlight-line.underline');
 
-            this.createDecoration(topLine,`-multi-line-${ style }-top`);
-            this.createDecoration(bottomLine,`-multi-line-${ style }-bottom`);
+
+            this.markers.push(
+                marker(bottomLine,`-multi-line-${ style }-bottom`) ,
+                marker(topLine,`-multi-line-${ style }-top`)
+            )
         }
     }
 
 
-    createDecoration ( range , className ){
+    // createDecoration ( range , className ){
 
-        let classes = 'highlight-line';
+    //     let classes = 'highlight-line';
 
-        if(className)
-            classes += className;
+    //     if(className)
+    //         classes += className;
 
-        const editor = HighlightLineView
-            .getEditor();
+    //     const editor = activeEditor();
 
-        const marker = editor
-            .markBufferRange(range);
+    //     const marker = editor
+    //         .markBufferRange(range);
 
-        editor.decorateMarker(marker,{
-            class : classes ,
-            type : 'line'
-        });
+    //     editor.decorateMarker(marker,{
+    //         class : classes ,
+    //         type : 'line'
+    //     });
 
-        this.markers.push(marker);
-    }
+    //     this.markers.push(marker);
+    // }
 
 
     observeSettings (){
