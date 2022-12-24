@@ -2,7 +2,7 @@
     "description" : "Highlights the current line in your editor" ,
     "repository" : "https://github.com/richrace/highlight-line" ,
     "homepage" : "https://github.com/richrace/highlight-line" ,
-    "version" : "0.12.0" ,
+    "version" : "1.0.0" ,
     "license" : "MIT" ,
     "name" : "highlight-line" ,
 
@@ -13,10 +13,10 @@
     "main" : "./lib/highlight-line" ,
 
     "scripts" : {
-        "test" : "pulsar --test spec"
+        "test" : "pulsar --test Tests"
     },
 
     "engines" : {
-        "pulsar" : ">=1.63.0 <2.0.0"
+        "pulsar" : ">=1.100.0 <2.0.0"
     }
 }
