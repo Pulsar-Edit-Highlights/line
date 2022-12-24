@@ -5,7 +5,7 @@ const { workspace , config } = atom;
 const PackageId = 'highlight-line';
 
 
-exports.marker = function ( range , styling ){
+function marker ( range , styling ){
 
     let selector = PackageId;
 
@@ -26,3 +26,49 @@ exports.marker = function ( range , styling ){
 
     return marker
 }
+
+
+
+const isSingleLine = ( selection ) =>
+    selection.isSingleScreenLine();
+
+const toContent = ( selection ) => [
+    selection.getBufferRange() ,
+    selection.getText()
+]
+
+
+exports.singleLine = function * (){
+
+    const hideWhenSelecting = config
+        .get('highlight-line.hideHighlightOnSelect');
+
+    const paintBackground = config
+        .get('highlight-line.enableBackgroundColor');
+
+    const paintUnderline = config
+        .get('highlight-line.enableUnderline');
+
+    const underlineStyle = config
+        .get('highlight-line.underline');
+
+
+    const selections = workspace
+        .getActiveTextEditor()
+        .getSelections()
+        .filter(isSingleLine)
+        .map(toContent);
+
+
+    for ( const [ range , text ] of selections ){
+
+        if( paintBackground && ( text === '' || ! hideWhenSelecting ) )
+            yield marker(range);
+
+        if( paintUnderline)
+            yield marker(range,`-multi-line-${ underlineStyle }-bottom`);
+    }
+}
+
+
+exports.marker = marker;

@@ -1,7 +1,7 @@
 
 const { CompositeDisposable } = require('atom');
 const { workspace , config } = atom;
-const { marker } = require('./Selection');
+const { singleLine , marker } = require('./Selection');
 
 const activeEditor = () =>
     workspace.getActiveTextEditor();
@@ -64,34 +64,9 @@ module.exports = class HighlightLineView {
             return;
 
         this.handleMultiLine();
-        this.handleSingleLine();
+
+        this.markers.push( ... singleLine() );
     }
-
-
-    handleSingleLine (){
-
-        const selections = activeEditor()
-            .getSelections();
-
-        for ( const selection of selections ){
-
-            if( ! selection.isSingleScreenLine() )
-                return
-
-            const selectionRange = selection
-                .getBufferRange();
-
-            if(selection.getText() === '' || ! config.get('highlight-line.hideHighlightOnSelect'))
-                if(config.get('highlight-line.enableBackgroundColor'))
-                    this.markers.push(marker(selectionRange));
-
-            if(config.get('highlight-line.enableUnderline')){
-                const style = config.get('highlight-line.underline');
-                this.markers.push(marker(selectionRange,`-multi-line-${style}-bottom`));
-            }
-        }
-    }
-
 
     handleMultiLine (){
 
