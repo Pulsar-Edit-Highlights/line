@@ -1,8 +1,8 @@
 {
-  "atom-text-editor": {
-    "cmd-shift-u": "highlight-line:toggle-underline",
-    "cmd-alt-shift-u": "highlight-line:toggle-selection-borders",
-    "cmd-shift-h": "highlight-line:toggle-background",
-    "cmd-alt-shift-h": "highlight-line:toggle-hide-highlight-on-select"
-  }
+    "atom-text-editor" : {
+        "cmd-alt-shift-h" : "highlight-line:toggle-hide-highlight-on-select" ,
+        "cmd-alt-shift-u" : "highlight-line:toggle-selection-borders" ,
+        "cmd-shift-h" : "highlight-line:toggle-background" ,
+        "cmd-shift-u" : "highlight-line:toggle-underline"
+    }
 }

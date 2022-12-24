@@ -1,37 +1,49 @@
-// The ui-variables file is provided by base themes provided by Atom.
-//
-// See https://github.com/atom/atom-dark-ui/blob/master/stylesheets/ui-variables.less
-// for a full listing of what's available.
+
+/*
+ *  The UI variables found in this file are defined in the themes
+ *  you are using, for example check the atom-dark-ui theme:
+ *
+ *  https://github.com/pulsar-edit/atom-dark-ui/blob/master/styles/ui-variables.less
+ *
+ */
+
 
 @import "line-colors";
 
-@borderWidth: 1px;
-@marginWidth: -1px;
+@borderWidth : +1px;
+@marginWidth : -1px;
+
 
 .highlight-view.hidden {
-  display: none;
+    display : none ;
 }
 
-.highlight-multi-line(@style: '') {
-  .line[class*="highlight-line-multi-line-@{style}-top"] {
-    border-top-style: @style;
-    border-top-width: @borderWidth;
-    border-top-color: @lineColour;
-    margin-top: @marginWidth;
-  }
-  .line[class*="highlight-line-multi-line-@{style}-bottom"] {
-    border-bottom-style: @style;
-    border-bottom-width: @borderWidth;
-    border-bottom-color: @lineColour;
-    margin-bottom: @marginWidth;
-  }
+
+.highlight-multi-line ( @style : '' ){
+
+    .line [ class *= 'highlight-line-multi-line-@{style}-top' ]{
+        border-top-width : @borderWidth ;
+        border-top-color : @lineColour ;
+        border-top-style : @style ;
+        margin-top : @marginWidth ;
+    }
+
+    .line [ class *= 'highlight-line-multi-line-@{style}-bottom' ]{
+        border-bottom-width : @borderWidth ;
+        border-bottom-color : @lineColour ;
+        border-bottom-style : @style ;
+        margin-bottom : @marginWidth ;
+    }
 }
+
 
 atom-text-editor {
-  .line.highlight-line {
-    background: @cursorBackground !important;
-  }
-  .highlight-multi-line(solid);
-  .highlight-multi-line(dashed);
-  .highlight-multi-line(dotted);
+
+    .line.highlight-line {
+        background : @cursorBackground !important ;
+    }
+
+    .highlight-multi-line(dashed) ;
+    .highlight-multi-line(dotted) ;
+    .highlight-multi-line(solid) ;
 }
