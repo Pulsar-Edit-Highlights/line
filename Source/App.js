@@ -2,15 +2,13 @@
 const
     { CompositeDisposable } = require('atom') ,
     HighlightLineModel = require('./Model') ,
-    Commands = require('./Commands') ,
-    Config = require('./Configuration') ;
+    Commands = require('./Commands') ;
 
 
 
 module.exports = {
 
     subscriptions : null ,
-    config : Config ,
     line : null ,
 
 
