@@ -4,8 +4,9 @@
 <div align = center>
 
 [![Badge Version]][Releases]  
-[![Badge CI]][Actions]  
 [![Badge License]][License]
+
+<!-- [![Badge CI]][Actions]   -->
 
 <br>
 <br>
