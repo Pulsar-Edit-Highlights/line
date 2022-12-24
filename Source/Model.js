@@ -1,7 +1,7 @@
 
 const { CompositeDisposable } = require('atom');
 const { workspace , config } = atom;
-const { singleLine , marker } = require('./Selection');
+const { singleLine , multiLine } = require('./Selection');
 
 const activeEditor = () =>
     workspace.getActiveTextEditor();
@@ -63,47 +63,46 @@ module.exports = class HighlightLineView {
         if( ! activeEditor() )
             return;
 
-        this.handleMultiLine();
-
+        this.markers.push( ... multiLine() );
         this.markers.push( ... singleLine() );
     }
 
-    handleMultiLine (){
+    // handleMultiLine (){
 
-        if( ! config.get('highlight-line.enableSelectionBorder') )
-            return;
+    //     if( ! config.get('highlight-line.enableSelectionBorder') )
+    //         return;
 
-        const selections = activeEditor()
-            .getSelections();
+    //     const selections = activeEditor()
+    //         .getSelections();
 
-        for ( const selection of selections ){
+    //     for ( const selection of selections ){
 
-            if(selection.isSingleScreenLine())
-                return
+    //         if(selection.isSingleScreenLine())
+    //             return
 
-            const selectionRange = selection
-                .getBufferRange()
-                .copy();
+    //         const selectionRange = selection
+    //             .getBufferRange()
+    //             .copy();
 
-            const topLine = selectionRange;
-            const bottomLine = selectionRange.copy();
+    //         const topLine = selectionRange;
+    //         const bottomLine = selectionRange.copy();
 
-            [ topLine.end , bottomLine.start ] =
-                [ topLine.start , bottomLine.end ];
+    //         [ topLine.end , bottomLine.start ] =
+    //             [ topLine.start , bottomLine.end ];
 
-            if(bottomLine.start.column === 0)
-                bottomLine.start.row -= 1;
+    //         if(bottomLine.start.column === 0)
+    //             bottomLine.start.row -= 1;
 
-            const style = config
-                .get('highlight-line.underline');
+    //         const style = config
+    //             .get('highlight-line.underline');
 
 
-            this.markers.push(
-                marker(bottomLine,`-multi-line-${ style }-bottom`) ,
-                marker(topLine,`-multi-line-${ style }-top`)
-            )
-        }
-    }
+    //         this.markers.push(
+    //             marker(bottomLine,`-multi-line-${ style }-bottom`) ,
+    //             marker(topLine,`-multi-line-${ style }-top`)
+    //         )
+    //     }
+    // }
 
 
     // createDecoration ( range , className ){

@@ -32,6 +32,9 @@ function marker ( range , styling ){
 const isSingleLine = ( selection ) =>
     selection.isSingleScreenLine();
 
+const isMultiLine = ( selection ) =>
+    ! isSingleLine(selection);
+
 const toContent = ( selection ) => [
     selection.getBufferRange() ,
     selection.getText()
@@ -71,4 +74,37 @@ exports.singleLine = function * (){
 }
 
 
-exports.marker = marker;
+
+exports.multiLine = function * (){
+
+    const paintBorders = config
+        .get('highlight-line.enableSelectionBorder');
+
+    if( ! paintBorders )
+        return;
+
+    const selections = workspace
+        .getActiveTextEditor()
+        .getSelections()
+        .filter(isMultiLine)
+        .map(toContent);
+
+    for ( const [ range ] of selections ){
+
+        const topLine = range.copy();
+        const bottomLine = range.copy();
+
+        [ topLine.end , bottomLine.start ] =
+            [ topLine.start , bottomLine.end ];
+
+        if(bottomLine.start.column === 0)
+            bottomLine.start.row -= 1;
+
+        const style = config
+            .get('highlight-line.underline');
+
+
+        yield marker(bottomLine,`-multi-line-${ style }-bottom`)
+        yield marker(topLine,`-multi-line-${ style }-top`)
+    }
+}
