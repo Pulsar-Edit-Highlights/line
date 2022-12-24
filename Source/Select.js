@@ -1,40 +1,8 @@
 
+const { marker , line } = require('./Marker');
+const Settings = require('./Settings');
+
 const { workspace } = atom;
-const Settings = require('./Settings')
-
-
-const PackageId = 'highlight-line';
-
-
-function marker ( range , styling ){
-
-    let selector = PackageId;
-
-    if( styling )
-        selector += styling;
-
-
-    const editor = workspace
-        .getActiveTextEditor();
-
-    const marker = editor
-        .markBufferRange(range);
-
-    editor.decorateMarker(marker,{
-        class : selector ,
-        type : 'line'
-    })
-
-    return marker
-}
-
-function line ( range , type ){
-
-    const { underlineStyle } = Settings;
-
-    return marker(range,`-multi-line-${ underlineStyle }-${ type }`);
-}
-
 
 
 const toContent = ( selection ) => [
@@ -43,21 +11,19 @@ const toContent = ( selection ) => [
     selection.getText()
 ]
 
+const selections = () => workspace
+    .getActiveTextEditor()
+    .getSelections()
+    .map(toContent);
+
 
 module.exports = function * (){
 
     const { hideWhenSelecting , paintUnderline ,
-            paintBackground , underlineStyle ,
-            paintOverline } = Settings;
+            paintBackground , paintOverline } = Settings;
 
 
-    const selections = workspace
-        .getActiveTextEditor()
-        .getSelections()
-        .map(toContent);
-
-
-    for ( const [ single , range , text ] of selections ){
+    for ( const [ single , range , text ] of selections() ){
 
         if( single ){
 
