@@ -1,52 +1,26 @@
 
-const { CompositeDisposable } = require('atom');
-
-const HighlightLineModel = require('./Model');
-const Configuration = require('./Configuration')
-const Actions = require('./Actions')
-
-const { commands , config } = atom;
-
-
-
-function toggleSetting ( setting ){
-
-    const opposite = !
-        config.get(setting);
-
-    config.set(setting,opposite);
-}
+const
+    { CompositeDisposable } = require('atom') ,
+    HighlightLineModel = require('./Model') ,
+    Commands = require('./Commands') ,
+    Config = require('./Configuration') ;
 
 
 
 module.exports = {
 
     subscriptions : null ,
-    config : Configuration ,
+    config : Config ,
     line : null ,
 
 
     activate (){
 
+        this.subscriptions = new CompositeDisposable;
         this.line = new HighlightLineModel;
 
-        // Setup to use the new composite disposables API for registering commands
-
-        this.subscriptions = new CompositeDisposable;
-
-        // Add the commands
-
-        const { subscriptions } = this;
-
-        for ( const [ toggle , setting ] of Actions ){
-
-            const action = { [ toggle ] : () => toggleSetting(setting) };
-
-            const command = commands
-                .add('atom-workspace',action);
-
-            subscriptions.add(command);
-        }
+        this.subscriptions.add(
+            ... Commands.register() );
     },
 
 
