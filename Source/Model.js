@@ -1,7 +1,7 @@
 
 const { CompositeDisposable } = require('atom');
 const { workspace , config } = atom;
-const { singleLine , multiLine } = require('./Selection');
+const select = require('./Select');
 
 const activeEditor = () =>
     workspace.getActiveTextEditor();
@@ -63,67 +63,8 @@ module.exports = class HighlightLineView {
         if( ! activeEditor() )
             return;
 
-        this.markers.push( ... multiLine() );
-        this.markers.push( ... singleLine() );
+        this.markers.push( ... select() );
     }
-
-    // handleMultiLine (){
-
-    //     if( ! config.get('highlight-line.enableSelectionBorder') )
-    //         return;
-
-    //     const selections = activeEditor()
-    //         .getSelections();
-
-    //     for ( const selection of selections ){
-
-    //         if(selection.isSingleScreenLine())
-    //             return
-
-    //         const selectionRange = selection
-    //             .getBufferRange()
-    //             .copy();
-
-    //         const topLine = selectionRange;
-    //         const bottomLine = selectionRange.copy();
-
-    //         [ topLine.end , bottomLine.start ] =
-    //             [ topLine.start , bottomLine.end ];
-
-    //         if(bottomLine.start.column === 0)
-    //             bottomLine.start.row -= 1;
-
-    //         const style = config
-    //             .get('highlight-line.underline');
-
-
-    //         this.markers.push(
-    //             marker(bottomLine,`-multi-line-${ style }-bottom`) ,
-    //             marker(topLine,`-multi-line-${ style }-top`)
-    //         )
-    //     }
-    // }
-
-
-    // createDecoration ( range , className ){
-
-    //     let classes = 'highlight-line';
-
-    //     if(className)
-    //         classes += className;
-
-    //     const editor = activeEditor();
-
-    //     const marker = editor
-    //         .markBufferRange(range);
-
-    //     editor.decorateMarker(marker,{
-    //         class : classes ,
-    //         type : 'line'
-    //     });
-
-    //     this.markers.push(marker);
-    // }
 
 
     observeSettings (){
