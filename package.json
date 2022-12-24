@@ -6,6 +6,8 @@
     "license" : "MIT" ,
     "name" : "highlight-line" ,
 
+    "keywords" : [ "highlight" , "line" , "selectiton" ] ,
+
     "bugs" : {
         "url" : "https://github.com/Pulsar-Edit-Highlights/line/issues"
     },
@@ -18,5 +20,34 @@
 
     "engines" : {
         "pulsar" : ">=1.100.0 <2.0.0"
+    },
+
+    "configSchema" : {
+
+        "enableBackgroundColor" : {
+            "default" : true ,
+            "type" : "boolean"
+        },
+
+        "hideHighlightOnSelect" : {
+            "default" : false ,
+            "type" : "boolean"
+        },
+
+        "enableSelectionBorder" : {
+            "default" : false ,
+            "type" : "boolean"
+        },
+
+        "enableUnderline" : {
+            "default" : false ,
+            "type" : "boolean"
+        },
+
+        "underline" : {
+            "default" : "solid" ,
+            "enum" : [ "solid" , "dotted" , "dashed" ] ,
+            "type" : "string"
+        }
     }
 }
