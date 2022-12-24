@@ -23,7 +23,7 @@ module.exports = {
 
     underline : {
         default : 'solid' ,
-        type : 'string' ,
-        enum : [ 'solid' , 'dotted' , 'dashed' ]
+        enum : [ 'solid' , 'dotted' , 'dashed' ] ,
+        type : 'string'
     }
 }

@@ -18,7 +18,7 @@ module.exports = class HighlightLineView {
         this.destroy = this.destroy.bind(this);
 
 
-        this.subscriptions = new CompositeDisposable();
+        this.subscriptions = new CompositeDisposable;
 
 
         const { updateSelectedLine , subscriptions } = this;
@@ -162,9 +162,19 @@ module.exports = class HighlightLineView {
 
         const { subscriptions } = this;
 
-        subscriptions.add(config.onDidChange('highlight-line.enableBackgroundColor',this.updateSelectedLine));
-        subscriptions.add(config.onDidChange('highlight-line.hideHighlightOnSelect',this.updateSelectedLine));
-        subscriptions.add(config.onDidChange('highlight-line.enableSelectionBorder',this.updateSelectedLine));
-        subscriptions.add(config.onDidChange('highlight-line.enableUnderline',this.updateSelectedLine));
+        const settings = [
+            'highlight-line.enableBackgroundColor' ,
+            'highlight-line.hideHighlightOnSelect' ,
+            'highlight-line.enableSelectionBorder' ,
+            'highlight-line.enableUnderline'
+        ]
+
+        for ( const setting of settings ){
+
+            const listener = config
+                .onDidChange(setting,() => this.updateSelectedLine());
+
+            subscriptions.add(listener);
+        }
     }
 }

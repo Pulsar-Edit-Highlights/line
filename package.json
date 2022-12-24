@@ -10,7 +10,7 @@
         "url" : "https://github.com/richrace/highlight-line/issues"
     },
 
-    "main" : "./lib/highlight-line" ,
+    "main" : "./Source/App" ,
 
     "scripts" : {
         "test" : "pulsar --test Tests"
