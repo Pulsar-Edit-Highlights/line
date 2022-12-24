@@ -1,7 +1,7 @@
 
 const { CompositeDisposable } = require('atom');
 
-const HighlightLineModel = require('./highlight-line-model');
+const HighlightLineModel = require('./Model');
 const Configuration = require('./Configuration')
 const Actions = require('./Actions')
 
