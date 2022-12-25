@@ -1,7 +1,7 @@
 
 # Customization
 
-Colors can be set by modifying the  `line-colors.less`  
+Colors can be set by modifying the  [`Theme.less`]  
 stylesheet or by adding to your  `style.less`  file.
 
 <br>
@@ -45,3 +45,5 @@ atom-text-editor::shadow {
 ```
 
 <br>
+
+[`Theme.less`]: ../Resources/Styles/Theme.less
