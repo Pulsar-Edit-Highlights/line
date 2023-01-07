@@ -1,61 +1,60 @@
 {
-    "description" : "Highlights the current line in your editor" ,
-    "repository" : "https://github.com/Pulsar-Edit-Highlights/line" ,
-    "homepage" : "https://github.com/Pulsar-Edit-Highlights/line" ,
-    "version" : "1.0.0" ,
-    "license" : "MIT" ,
-    "name" : "highlight-line" ,
-
-    "keywords" : [ "highlight" , "line" , "selectiton" ] ,
-
-    "bugs" : {
-        "url" : "https://github.com/Pulsar-Edit-Highlights/line/issues"
+  "description": "Highlights the current line in your editor",
+  "repository": "https://github.com/Pulsar-Edit-Highlights/line",
+  "homepage": "https://github.com/Pulsar-Edit-Highlights/line",
+  "version": "1.0.0",
+  "license": "MIT",
+  "name": "line",
+  "keywords": [
+    "highlight",
+    "line",
+    "selectiton"
+  ],
+  "bugs": {
+    "url": "https://github.com/Pulsar-Edit-Highlights/line/issues"
+  },
+  "keymaps": [
+    "../Resources/Keymap.json"
+  ],
+  "menus": [
+    "../Resources/Menus.json"
+  ],
+  "main": "./Source/App",
+  "styleSheets": [
+    "../Resources/Styles/Package.less",
+    "../Resources/Styles/Theme.less"
+  ],
+  "scripts": {
+    "test": "pulsar --test Tests"
+  },
+  "engines": {
+    "pulsar": ">=1.100.0 <2.0.0"
+  },
+  "configSchema": {
+    "enableBackgroundColor": {
+      "default": true,
+      "type": "boolean"
     },
-
-    "keymaps" : [ "../Resources/Keymap.json" ] ,
-    "menus" : [ "../Resources/Menus.json" ] ,
-
-    "main" : "./Source/App" ,
-
-    "styleSheets" : [
-        "../Resources/Styles/Package.less" ,
-        "../Resources/Styles/Theme.less"
-    ],
-
-    "scripts" : {
-        "test" : "pulsar --test Tests"
+    "hideHighlightOnSelect": {
+      "default": false,
+      "type": "boolean"
     },
-
-    "engines" : {
-        "pulsar" : ">=1.100.0 <2.0.0"
+    "enableSelectionBorder": {
+      "default": false,
+      "type": "boolean"
     },
-
-    "configSchema" : {
-
-        "enableBackgroundColor" : {
-            "default" : true ,
-            "type" : "boolean"
-        },
-
-        "hideHighlightOnSelect" : {
-            "default" : false ,
-            "type" : "boolean"
-        },
-
-        "enableSelectionBorder" : {
-            "default" : false ,
-            "type" : "boolean"
-        },
-
-        "enableUnderline" : {
-            "default" : false ,
-            "type" : "boolean"
-        },
-
-        "underline" : {
-            "default" : "solid" ,
-            "enum" : [ "solid" , "dotted" , "dashed" ] ,
-            "type" : "string"
-        }
+    "enableUnderline": {
+      "default": false,
+      "type": "boolean"
+    },
+    "underline": {
+      "default": "solid",
+      "enum": [
+        "solid",
+        "dotted",
+        "dashed"
+      ],
+      "type": "string"
     }
+  }
 }
