@@ -2,7 +2,7 @@
   "description": "Highlights the current line in your editor",
   "repository": "https://github.com/Pulsar-Edit-Highlights/line",
   "homepage": "https://github.com/Pulsar-Edit-Highlights/line",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "name": "line",
   "keywords": [
